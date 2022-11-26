@@ -13,15 +13,15 @@ defSconcordance <- function() cat('
 ')
 
 useknitr <- function(writeMacro) {
-    if (!requireNamespace("knitr"))
-        stop("This function requires the knitr package.")
-    knitr::opts_knit$set(concordance = TRUE)
-    infile <- knitr::current_input()
-    if (missing(writeMacro))
-        writeMacro <- any(grepl(knitr::knit_patterns$get("header.begin"),
-        		    readLines(infile, 100)))   
-    if (writeMacro) 
-    	defSconcordance()
-    cat("\\input{", tools::file_path_sans_ext(infile), "-concordance}",
-        sep = "")
+  if (!requireNamespace("knitr"))
+    stop("This function requires the knitr package.")
+  knitr::opts_knit$set(concordance = TRUE)
+  infile <- knitr::current_input()
+  if (missing(writeMacro))
+    writeMacro <- any(grepl(knitr::knit_patterns$get("header.begin"),
+                            readLines(infile, 100)))
+  if (writeMacro)
+    defSconcordance()
+  cat("\\input{", tools::file_path_sans_ext(infile), "-concordance}",
+      sep = "")
 }
