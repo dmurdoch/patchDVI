@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}Quick Start Instructions}{3}{section.2}%
+\contentsline {section}{\numberline {3}\textbf {patchDVI}\ History}{5}{section.3}%
+\contentsline {section}{\numberline {4}Sweave Concordances}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Technical description of concordance records}{6}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Patching \texttt {.dvi} Files}{8}{section.5}%
+\contentsline {section}{\numberline {6}Patching \texttt {.synctex} Files}{8}{section.6}%
+\contentsline {section}{\numberline {7}Project Management Functions}{8}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The Complete Process}{10}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Installing or Loading Packages}{11}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Conclusion}{11}{section.8}%
+\contentsline {section}{\numberline {A}Using \textbf {patchDVI}\ with TeXShop}{13}{appendix.A}%
+\contentsline {section}{\numberline {B}Using \textbf {patchDVI}\ with TeXWorks}{14}{appendix.B}%
+\contentsline {section}{\numberline {C}Using \textbf {patchDVI}\ with WinEdt}{16}{appendix.C}%
+\contentsline {section}{\numberline {D}Using \textbf {patchDVI}\ with RStudio}{16}{appendix.D}%
