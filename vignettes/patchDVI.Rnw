@@ -76,7 +76,7 @@ rather than the \LaTeX\ intermediate file.
 A 2022 addition follows a similar process with R Markdown files.
 In this case, the output driver in the YAML header needs to be
 changed, for example to
-\verb!patchDVI::pdf_document_with_concordance!.  The driver
+\verb!patchDVI::pdf_documentC!.  The driver
 automates the steps described above.
 
 Besides the technical details mentioned above,
@@ -188,10 +188,10 @@ it to CRAN.
 
 With those versions installed, you then change the \verb!output!
 setting in the YAML.  If it was \verb!pdf_document!, use\\
-\verb!patchDVI::pdf_document_with_concordance! \\
+\verb!patchDVI::pdf_documentC! \\
 instead.  If it
 was \verb!html_document!, use\\
-\verb!patchDVI::html_document_with_concordance!.  \\
+\verb!patchDVI::html_documentC!.  \\
 That should be
 all that is necessary to enable concordances and to carry out the
 necessary patching.  Almost all options in the original drivers

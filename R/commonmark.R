@@ -39,9 +39,9 @@ html_with_concordance <- function(driver) {
   }
 }
 
-html_document_with_concordance <- html_with_concordance(html_document)
+html_documentC <- html_with_concordance(rmarkdown::html_document)
 
-html_vignette_with_concordance <- html_with_concordance(html_vignette)
+html_vignetteC <- html_with_concordance(rmarkdown::html_vignette)
 
 pdf_with_concordance <- function(driver) {
   force(driver)
@@ -98,4 +98,4 @@ pdf_with_concordance <- function(driver) {
   }
 }
 
-pdf_document_with_concordance <- pdf_with_concordance(pdf_document)
+pdf_documentC <- pdf_with_concordance(rmarkdown::pdf_document)
