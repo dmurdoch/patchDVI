@@ -43,3 +43,7 @@ devtools::install_github("dmurdoch/backports")
 devtools::install_github("dmurdoch/knitr")
 devtools::install_github("dmurdoch/patchDVI@RmdConcord")
 ```
+
+## Usage
+
+See the `patchDVI` vignette for usage details and history.

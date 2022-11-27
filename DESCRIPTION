@@ -6,7 +6,7 @@ Author: Duncan Murdoch
 Maintainer: Duncan Murdoch <murdoch.duncan@gmail.com>
 Description: Functions to patch specials in '.dvi' files,
         or entries in '.synctex' files.  Works with concordance=TRUE 
-        in Sweave or knitr to link sources to previews.
+        in Sweave, knitr or R Markdown to link sources to previews.
 License: GPL-2
 Depends: R (>= 3.3.0)
 Imports: utils, tools, knitr, rmarkdown, backports

@@ -102,4 +102,5 @@ Quick initial releases.
       Added needsPackages() function.
 
 1.11.0:
-      Added support for R Markdown sources.
+      Added support for R Markdown sources using R Markdown
+      output drivers pdf_documentC etc.
