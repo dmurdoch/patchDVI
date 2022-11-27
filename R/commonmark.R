@@ -7,7 +7,7 @@ test_knitr <- function() {
 }
 
 fix_pandoc_from_options <- function(from, sourcepos) {
-  from <- sub("^markdown", "commonmark", from)
+  from <- sub("^markdown", "commonmark_x", from)
   from <- sub("[+]tex_math_single_backslash", "", from)
   from <- paste0(from,
                  "+yaml_metadata_block",
@@ -75,14 +75,16 @@ pdf_with_concordance <- function(driver) {
 
         if (length(orig_ext) != 1 || orig_ext != ".tex") {
           # Run pdflatex or other with Synctex output
-          args <- c("-synctex=1",
-                    if (workdir != ".") c("-output-directory", workdir),
-                    outfile)
-          system2(latex_engine, args)
-
+          consoleLog <- try(texi2dvi(outfile, pdf = TRUE))
+          if (!inherits(consoleLog, "try-error")) {
+            tempLog <- tempfile(fileext = ".log")
+            writeLines(consoleLog, tempLog)
+            patchLog(tempLog)
+            consoleLog <- readLines(tempLog)
+          }
+          cat(consoleLog, sep = "\n")
           # Apply concordance changes to Synctex file
-          synctexfile <- paste0(sans_ext(outfile), ".synctex")
-          patchDVI::patchSynctex(synctexfile)
+          message(patchSynctex(sub("\\.tex$", ".synctex", outfile, ignore.case=TRUE), patchLog = TRUE))
         }
 
         # Run the old post-processor, if there was one
