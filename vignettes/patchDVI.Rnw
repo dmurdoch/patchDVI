@@ -218,13 +218,16 @@ at \url{https://pandoc.org/MANUAL.html}.)
 Of particular note are the lack of \verb!citations! and
 \verb!raw_tex!.  Citations in Markdown source like \verb!(@Author)!
 will not currently be processed in Commonmark, though
-support for this is planned at some future time.  Raw \LaTeX\ like
-\verb!\pagebreak! will need to be ``fenced'', i.e. entered as
+support for this is planned at some future time.  Raw \LaTeX\  will need to be ``fenced'', e.g. entered as
 \begin{verbatim}
 ```{=latex}
-\pagebreak
+\LaTeX
 ```
 \end{verbatim}
+(The \verb!\pagebreak! and \verb!\newpage! macros receive special
+treatment, so they don't need fencing
+as long as they are separated by blank lines from text above and
+below.)
 The ``roadmap" indicates that raw \LaTeX\ will never be supported
 in Commonmark, as it is incompatible.
 

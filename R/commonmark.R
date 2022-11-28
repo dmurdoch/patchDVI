@@ -56,9 +56,12 @@ pdf_with_concordance <- function(driver) {
     res$knitr$opts_knit$concordance <- sourcepos
     if (sourcepos) {
       res$pandoc$from <- fix_pandoc_from_options(res$pandoc$from, sourcepos)
+# res$pandoc$to <- "native"
       # Add filter to insert \datapos markup
       res$pandoc$lua_filters <- c(res$pandoc$lua_filters,
-                                  system.file("rmarkdown/lua/latex-datapos.lua", package = "patchDVI"))
+                                  system.file("rmarkdown/lua/pagebreak.lua", package = "patchDVI"),
+                                  system.file("rmarkdown/lua/latex-datapos.lua", package = "patchDVI")
+                                  )
       # Pandoc should produce .tex, not go directly to .pdf
       orig_ext <- res$pandoc$ext
       res$pandoc$ext = ".tex"
