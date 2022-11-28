@@ -211,78 +211,22 @@ uses its own dialect of Markdown.  To enable concordances,
 
 Unfortunately, the \verb!commonmark_x! reader doesn't support most of
 the extensions that the standard \verb!markdown! reader supports.
-(For the definitions of these extensions, see the Pandoc documentation
+This page:  \url{https://github.com/jgm/pandoc/wiki/Roadmap} lists the current status.
+For the definitions of the extensions, see the Pandoc documentation
 at \url{https://pandoc.org/MANUAL.html}.)
-Of the extensions that are enabled by default, \verb!commonmark_x!
-does not currently support these:
-\begin{verbatim}
-all_symbols_escapable
-auto_identifiers
-backtick_code_blocks
-blank_before_blockquote
-blank_before_header
-citations
-escaped_line_breaks
-example_lists
-fenced_code_attributes
-fenced_code_blocks
-grid_tables
-header_attributes
-inline_code_attributes
-inline_notes
-intraword_underscores
-latex_macros
-line_blocks
-link_attributes
-markdown_in_html_blocks
-multiline_tables
-native_divs
-native_spans
-pandoc_title_block
-raw_tex
-shortcut_reference_links
-simple_tables
-space_in_atx_header
-startnum
-table_captions
-\end{verbatim}
-Of the extensions that are disabled by default, these are not supported:
-\begin{verbatim}
-compact_definition_lists
-four_space_rule
-gutenberg
-ignore_line_breaks
-lists_without_preceding_blankline
-literate_haskell
-markdown_attribute
-mmd_header_identifiers
-mmd_link_attributes
-mmd_title_block
-old_dashes
-short_subsuperscripts
-spaced_reference_links
-tex_math_double_backslash
-tex_math_single_backslash
-\end{verbatim}
+
 Of particular note are the lack of \verb!citations! and
 \verb!raw_tex!.  Citations in Markdown source like \verb!(@Author)!
-will not be processed in Commonmark.  Raw \LaTeX\ like
+will not currently be processed in Commonmark, though
+support for this is planned at some future time.  Raw \LaTeX\ like
 \verb!\pagebreak! will need to be ``fenced'', i.e. entered as
 \begin{verbatim}
 ```{=latex}
 \pagebreak
 ```
 \end{verbatim}
-I don't know if there's a way to avoid a paragraph break around
-fenced \LaTeX.
-
-There are also two extensions available in \verb!commonmark_x! that
-are not available in Pandoc Markdown.  The \verb!sourcepos! extension
-is the most important one; it's the whole basis of concordance
-support.  Additionally, the \verb!attributes! extension
-(enabled by default) subsumes several of the standard \verb!*_attributes!
-extensions.  The \verb!gfm_auto_identifiers! extension is enabled
-in \verb!commonmark_x! but disabled in Pandoc Markdown.
+The ``roadmap" indicates that raw \LaTeX\ will never be supported
+in Commonmark, as it is incompatible.
 
 \section{\patchDVI History}\label{sec:history}
 
