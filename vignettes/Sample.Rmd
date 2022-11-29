@@ -1,7 +1,7 @@
 ---
 title: "Sample"
 output: 
-  rmarkdown::html_document
+  patchDVI::pdf_documentC
 vignette: >
   %\VignetteIndexEntry{Sample}
   %\VignetteEngine{knitr::rmarkdown}
