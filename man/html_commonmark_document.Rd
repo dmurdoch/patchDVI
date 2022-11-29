@@ -18,7 +18,8 @@ html_documentC(sourcepos = TRUE, ...)
 html_vignetteC(sourcepos = TRUE, ...)
 pdf_documentC(latex_engine = "pdflatex",
            sourcepos = TRUE,
-           defineSconcordance = TRUE, ...)
+           defineSconcordance = TRUE,
+           run_latex = TRUE, ...)
 }
 \arguments{
   \item{sourcepos}{
@@ -31,6 +32,9 @@ Command to convert \file{.tex} file to \file{.pdf}.
 If \code{TRUE}, insert a definition of the \verb{\Sconcordance}
 macro just before \verb{\begin{document}}.
 }
+  \item{run_latex}{
+Whether to run the \code{latex_engine} to produce a PDF.
+  }
   \item{\dots}{
 Other arguments to pass to the base driver.
 }

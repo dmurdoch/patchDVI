@@ -200,6 +200,12 @@ necessary patching.  Almost all options in the original drivers
 are supported in these replacements, plus a few more.  See the
 help pages for details.
 
+It is also possible to use analogs of the 
+\texttt{SweavePDF}/\texttt{knitPDF} family of
+functions; the ones intended for Markdown source are
+\texttt{renderMiktex}, \texttt{renderPDFMiktex}, \texttt{renderDVI},
+\texttt{renderPDF}, \texttt{renderDVIPDFM} and \texttt{renderAll}.
+
 \subsection{Known limitations of Markdown support}
 
 The Markdown support relies on a relatively recent addition to
@@ -433,8 +439,9 @@ Moreover, step 1 needs to be repeated once for each \file{.Rnw} file, but only
 if the content has changed since the last run, while the other steps need only
 be done once.
 
-To manage this complication, the \patchDVI package includes two simple
-project management functions, \texttt{knitAll} and \texttt{SweaveAll}.  These are really the same function with different
+To manage this complication, the \patchDVI package includes simple
+project management functions, \texttt{knitAll}, \texttt{renderAll} and
+\texttt{SweaveAll}.  These are really the same function with different
 defaults, and will be described in terms of \texttt{SweaveAll}.
 This function runs Sweave
 on multiple files and determines the name of the main wrapper file.  It is
@@ -502,13 +509,13 @@ Similarly, the wrapper file (named for example
 ``wrapper.Rnw'') should be a \file{.Rnw} file that sets
 \verb!.SweaveFiles! to the complete list of files in the project.
 Then one can build an initial copy of the entire document by calling
-any of \Sexpr{paste0("\\\\texttt{", outer(c("knit", "Sweave"), c("PDF", "Miktex", "DVI", "DVIPDFM"), paste0), "\175", collapse=", ")}
+any of \label{fulllist} \Sexpr{paste0("\\\\texttt{", outer(c("knit", "Sweave", "render"), c("PDF", "Miktex", "DVI", "DVIPDFM"), paste0), "\175", collapse=", ")}
 with argument \texttt{"wrapper.Rnw"}.
 Later, while one is working on \texttt{"chapter.Rnw"}, one can call
 one of those functions
 with argument \texttt{"chapter.Rnw"}
 and the chapter will be processed through
-the full sequence, without running knitr/Sweave on the other chapters.
+the full sequence, without running knitr/Sweave/R Markdown on the other chapters.
 
 More complicated schemes are possible.  For example:
 \begin{itemize}
@@ -523,12 +530,21 @@ then include \texttt{"wrapper.Rnw"} in \verb!.SweaveFiles! in each chapter.
 \subsection{The Complete Process}\label{sec:complete}
 
 The \patchDVI package contains five functions for each
-of knitr and Sweave designed to run all
-four of the steps listed at the start of this section.  The functions
-\texttt{knitDVI}/\texttt{SweaveDVI} and \texttt{knitMiktex}/\texttt{SweaveMiktex} produce \file{.dvi} output
-in the general case and for MikTeX respectively; \texttt{knitPDF}/\texttt{SweavePDF} and
-\texttt{knitPDFMiktex}/\texttt{SweavePDFMiktex} do the same for direct \file{.pdf} output
-from \texttt{pdflatex}.  Finally, \texttt{knitDVIPDFM}/\texttt{SweaveDVIPDFM} run
+of knitr,  R Markdown and Sweave designed to run all
+four of the steps listed at the start of this section.  
+
+The functions
+are all named in the same style:  \textit{Stage1Stage2}, where
+\textit{Stage1} is one of \texttt{knit}, \texttt{render}, or \texttt{Sweave}, and \textit{Stage2} is one of \texttt{DVI}, 
+\texttt{Miktex}, \texttt{PDF}, \texttt{PDFMiktex}, \texttt{DVIPDFM}.
+The full list was given near the end of the introduction to Section \ref{sec:make} on p. \pageref{fulllist}.  The \textit{Stage1} parts
+specify the initial processor as being \texttt{knit::knit}, \texttt{Sweave}, or \texttt{rmarkdown::render}.  The \textit{Stage2}
+part specifies how the resulting \texttt{.tex} files are processed:
+\texttt{knitDVI} and \texttt{knitMiktex} and related functions produce \texttt{.dvi} files 
+in the general case and for MikTeX respectively; \texttt{knitPDF} and
+\texttt{knitPDFMiktex} and friends do the same for direct \file{.pdf} output
+from \texttt{pdflatex}.  Finally, \texttt{knitDVIPDFM} and 
+related functions run
 the two-step conversion using first \texttt{latex} and then \texttt{dvipdfm}.
 
 In each case, the \TeX\ processing functions are customizable.
@@ -630,10 +646,24 @@ in your home directory, and give it executable permissions.  Replace \verb!<loca
 your locale string, e.g. \verb!en_CA.UTF-8! for Canadian English using UTF-8 encoding.  The
 locale line can be omitted if you only use plain ASCII characters, but is probably necessary
 for other cases.
+\item To use with R Markdown, create a file called \\
+\verb!Library/TeXShop/Engines/markdown.engine! \\
+containing the lines
+\begin{verbatim}
+#!/bin/bash
+export LC_ALL=<locale>
+Rscript -e "patchDVI::renderPDF('$1',\
+  envir = globalenv())"
+\end{verbatim}
+in your home directory, and give it executable permissions.  Replace \verb!<locale>! with
+your locale string, e.g. \verb!en_CA.UTF-8! for Canadian English using UTF-8 encoding.  The
+locale line can be omitted if you only use plain ASCII characters, but is probably necessary
+for other cases.
 \item For other vignette engines, use a \verb!weave! argument in the above, as appropriate.
 \end{enumerate}
 \item Install the \texttt{patchDVI} package into R.
-\item When editing a \texttt{.Rnw} file in TeXShop, choose the knitr or Sweave engine from the menu.
+\item When editing a \texttt{.Rnw} file in TeXShop, choose the knitr or Sweave engine from the menu; for \texttt{.Rmd} files, use the markdown
+engine.
 \item If you have multiple files in your project, your main file must be a \file{.Rnw} file
 (e.g. \texttt{Main.Rnw}) which lists all \file{.Rnw} files in a \verb!.SweaveFiles! variable,
 and you need to add the line
@@ -720,8 +750,7 @@ To use TeXWorks with knitr, the instructions are very similar to those above, bu
 
 In step \ref{theCommand}, replace the second line of the command (the \verb!SweavePDF! call) with the following longer command, all on one line:
 \begin{verbatim}
-patchDVI::SweavePDF('$fullname', weave = knitr::knit,
-envir = globalenv())
+patchDVI::knitPDF('$fullname', envir = globalenv())
 \end{verbatim}
 
 In step \ref{theConcordance}, insert the following code chunk
@@ -731,6 +760,14 @@ into your file:
  patchDVI::useknitr()
  @
 \end{verbatim}
+
+To use TeXWorks with R Markdown, make these changes:
+
+In step \ref{theCommand}, replace the second line of the command (the \verb!SweavePDF! call) with the following:
+\begin{verbatim}
+patchDVI::renderPDF('$fullname', envir = globalenv())
+\end{verbatim}
+
 
 \section{Using \patchDVI with WinEdt}
 \label{sec:winedt}

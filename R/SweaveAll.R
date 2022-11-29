@@ -10,6 +10,21 @@ knitAll <- function(RnwFiles = NULL, make=1, PostKnitHook=NULL,
             weave = weave,
             ...)
 
+renderAll <- function(RmdFiles = NULL, make = 1, PostKnitHook = NULL,
+                      force = TRUE, verbose = FALSE,
+                      weave = rmarkdown::render,
+                      ...) {
+  SweaveAll(SweaveFiles = RmdFiles,
+            make = make,
+            PostSweaveHook = PostKnitHook,
+            force = force,
+            verbose = verbose,
+            weave = weave,
+            output_options = list(run_latex = FALSE),
+            envir = parent.frame(),
+            ...)
+}
+
 SweaveAll <- function(SweaveFiles = NULL, make=1, PostSweaveHook=NULL,
                       force = TRUE, verbose = FALSE,
                       weave=utils::Sweave, ...) {

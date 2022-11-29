@@ -47,10 +47,13 @@ pdf_with_concordance <- function(driver) {
   force(driver)
   function(latex_engine = "pdflatex",
            sourcepos = TRUE,
-           defineSconcordance = TRUE, ...) {
+           defineSconcordance = TRUE,
+           run_latex = TRUE, ...) {
 
     # Have we got the patched knitr?
     test_knitr()
+
+    force(run_latex)
 
     res <- driver(latex_engine = latex_engine, ...)
     res$knitr$opts_knit$concordance <- sourcepos
@@ -76,7 +79,9 @@ pdf_with_concordance <- function(driver) {
         # Modify the .tex file
         processLatexConcordance(outfile, followConcordance = concordanceFile, defineSconcordance = defineSconcordance)
 
-        if (length(orig_ext) != 1 || orig_ext != ".tex") {
+        newoutfile <- outfile
+        if (run_latex &&
+            (length(orig_ext) != 1 || orig_ext != ".tex")) {
           # Run pdflatex or other with Synctex output
           consoleLog <- try(texi2dvi(outfile, pdf = TRUE))
           if (!inherits(consoleLog, "try-error")) {
@@ -88,10 +93,11 @@ pdf_with_concordance <- function(driver) {
           cat(consoleLog, sep = "\n")
           # Apply concordance changes to Synctex file
           message(patchSynctex(sub("\\.tex$", ".synctex", outfile, ignore.case=TRUE), patchLog = TRUE))
+          newoutfile <- paste0(sans_ext(outfile), ".pdf")
         }
 
         # Run the old post-processor, if there was one
-        newoutfile <- paste0(sans_ext(outfile), ".pdf")
+
         if (is.function(oldpost))
           res <- oldpost(yaml, infile, newoutfile, ...)
         else

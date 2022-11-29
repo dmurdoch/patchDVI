@@ -4,7 +4,11 @@ export(readDVI, DVIspecials, setDVIspecials, patchDVI, SweaveMiktex,
        knitMiktex,
        knitPDFMiktex, knitDVI, knitPDF, knitDVIPDFM,
        knitAll, knitInRStudio,
+       renderMiktex,
+       renderPDFMiktex, renderDVI, renderPDF, renderDVIPDFM,
+       renderAll,
        needsPackages)
+
 export(processConcordance,
        html_documentC,
        html_vignetteC,
