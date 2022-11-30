@@ -22,10 +22,4 @@ importFrom(tools, sans_ext = file_path_sans_ext)
 importFrom(utils, Sweave, Stangle, file_test,
                   install.packages, update.packages)
 importFrom(tools, vignetteEngine)
-if (getRversion() >= "4.3.0") {
-  importFrom(tools, as.Rconcordance)
-  importFrom(tools, matchConcordance)
-} else {
-  importFrom(backports, as.Rconcordance)
-  importFrom(backports, matchConcordance)
-}
+

@@ -37,8 +37,9 @@ renderMiktex <- function(Rmd,
                        patchLog = TRUE,
                        sleep = 0,
                        weave = rmarkdown::render,
-                       ...)
-SweaveMiktex(Rnw = Rmd,
+                       ...) {
+  test_rmarkdown()
+  SweaveMiktex(Rnw = Rmd,
              main = main,
              cmd = cmd,
              options = options,
@@ -53,6 +54,7 @@ SweaveMiktex(Rnw = Rmd,
              output_options = list(run_latex = FALSE),
              envir = parent.frame(),
              ...)
+}
 
 SweaveMiktex <- function(Rnw,
                          main,
@@ -124,7 +126,8 @@ renderDVI <- function( Rmd, main,
                      preview=NULL,
                      patchLog = TRUE,
                      weave = rmarkdown::render,
-                     ... )
+                     ... ) {
+  test_rmarkdown()
   SweaveDVI( Rnw = Rmd,
              main = main,
              texinputs = texinputs,
@@ -137,6 +140,7 @@ renderDVI <- function( Rmd, main,
              output_options = list(run_latex = FALSE),
              envir = parent.frame(),
              ...)
+}
 
 SweaveDVI <- function( Rnw, main,
                        texinputs=NULL,

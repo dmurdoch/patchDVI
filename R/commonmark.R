@@ -1,9 +1,17 @@
-test_knitr <- function() {
+test_rmarkdown <- function() {
+  if (!requireNamespace("knitr", quietly = TRUE))
+    stop("patchDVI requires knitr to process R Markdown")
   save <- knitr::opts_knit$get(c("concordance", "rmarkdown.pandoc.to"))
   knitr::opts_knit$set(concordance = TRUE, rmarkdown.pandoc.to = "markdown")
   on.exit(knitr::opts_knit$set(save))
   if (!knitr:::concord_mode())
-    stop("This driver requires patches to knitr that are available using\n  remotes::install_github('dmurdoch/knitr')")
+    stop("patchDVI requires patches to knitr that are available using\n  remotes::install_github('dmurdoch/knitr')")
+
+  if (!exists("matchConcordance", where = parent.env(environment())))
+    stop("patchDVI requires the backports package containing matchConcordance()")
+
+  if (!requireNamespace("rmarkdown", quietly = TRUE))
+    stop("patchDVI requires rmarkdown to process R Markdown documents")
 }
 
 fix_pandoc_from_options <- function(from, sourcepos) {
@@ -18,8 +26,8 @@ fix_pandoc_from_options <- function(from, sourcepos) {
 html_with_concordance <- function(driver) {
   force(driver)
   function(sourcepos = TRUE, ...) {
-    # Have we got the patched knitr?
-    test_knitr()
+    # Have we got the suggested dependencies?
+    test_rmarkdown()
 
     res <- driver(...)
     res$knitr$opts_knit$concordance <- sourcepos
@@ -50,8 +58,8 @@ pdf_with_concordance <- function(driver) {
            defineSconcordance = TRUE,
            run_latex = TRUE, ...) {
 
-    # Have we got the patched knitr?
-    test_knitr()
+    # Have we got the suggested dependencies?
+    test_rmarkdown()
 
     force(run_latex)
 
@@ -72,10 +80,11 @@ pdf_with_concordance <- function(driver) {
       # Replace the old post_processor with ours
       oldpost <- res$post_processor
       res$post_processor <- function(yaml, infile, outfile, ...) {
-        workdir <- dirname(infile)
-
+        workdir <- dirname(outfile)
         # We should have a concordance file
-        concordanceFile <- paste0(sans_ext(infile), "-concordance.tex")
+        concordanceFile <- paste0(sans_ext(normalizePath(infile)), "-concordance.tex")
+        origdir <- setwd(workdir)
+        on.exit(setwd(origdir))
         # Modify the .tex file
         processLatexConcordance(outfile, followConcordance = concordanceFile, defineSconcordance = defineSconcordance)
 

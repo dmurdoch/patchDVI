@@ -35,8 +35,9 @@ renderPDFMiktex <- function(Rmd, main,
                            patchLog = TRUE,
                            sleep = 0,
                            weave = rmarkdown::render,
-                           ...)
-SweavePDFMiktex( Rnw = Rmd,
+                           ...) {
+  test_rmarkdown()
+  SweavePDFMiktex( Rnw = Rmd,
                  main = main,
                  cmd = cmd,
                  options = options,
@@ -51,7 +52,7 @@ SweavePDFMiktex( Rnw = Rmd,
                  output_options = list(run_latex = FALSE),
                  envir = parent.frame(),
                  ...)
-
+}
 
 SweavePDFMiktex <- function( Rnw, main,
                              cmd="texify --pdf",
@@ -120,7 +121,8 @@ renderPDF <- function( Rmd, main,
                      preview = NULL,
                      patchLog = TRUE,
                      weave = rmarkdown::render,
-                     ...  )
+                     ...  ) {
+  test_rmarkdown()
   SweavePDF( Rnw = Rmd, main = main,
              texinputs = texinputs,
              source.code = source.code,
@@ -132,6 +134,7 @@ renderPDF <- function( Rmd, main,
              output_options = list(run_latex = FALSE),
              envir = parent.frame(),
              ...)
+}
 
 SweavePDF <- function( Rnw, main,
                        texinputs=NULL,
@@ -202,8 +205,9 @@ renderDVIPDFM <- function(Rmd, main,
                         preview = NULL,
                         patchLog = TRUE,
                         weave = rmarkdown::render,
-                        ... )
-SweaveDVIPDFM(Rnw = Rmd, main=main,
+                        ... ) {
+  test_rmarkdown()
+  SweaveDVIPDFM(Rnw = Rmd, main=main,
               latex = latex,
               latexOpts = latexOpts,
               dvipdfm = dvipdfm,
@@ -217,6 +221,7 @@ SweaveDVIPDFM(Rnw = Rmd, main=main,
               output_options = list(run_latex = FALSE),
               envir = parent.frame(),
               ... )
+}
 
 SweaveDVIPDFM <- function(Rnw, main,
                           latex = "latex",
