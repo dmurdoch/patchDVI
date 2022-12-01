@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 texput.log$
 ^README.Rmd$
+^.github
