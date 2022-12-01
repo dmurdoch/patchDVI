@@ -45,11 +45,6 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
-      - name: Install additional LaTeX packages
-        run: |
-          tlmgr install uplatex
-          cat `kpsewhich kanjix.map`
-
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r-dependencies@v2
@@ -61,6 +56,6 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args:  '--no-build-vignettes'
-          args:  '--no-build-vignettes'
+          build_args:  '"--no-build-vignettes"'
+          args:  '"--no-build-vignettes"'
 
