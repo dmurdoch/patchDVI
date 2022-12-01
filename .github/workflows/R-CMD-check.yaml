@@ -57,5 +57,5 @@ jobs:
         with:
           upload-snapshots: true
           build_args:  '"--no-build-vignettes"'
-          args:  '"--no-build-vignettes"'
+          args:  '"--ignore-vignettes"'
 
