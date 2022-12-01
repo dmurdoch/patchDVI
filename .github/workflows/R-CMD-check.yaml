@@ -48,7 +48,7 @@ jobs:
       - name: Install additional LaTeX packages
         run: |
           tlmgr install uplatex
-          tlmgr list --only-installed
+          cat `kpsewhich kanjix.map`
 
       - uses: r-lib/actions/setup-pandoc@v2
 
