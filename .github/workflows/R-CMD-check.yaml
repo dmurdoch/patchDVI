@@ -43,6 +43,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           rtools-version: ${{ matrix.config.rtools-version }}
 
+      - uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Install additional LaTeX packages
+        run: |
+          tlmgr install uplatex
+          tlmgr install dvipdfmx
+          tlmgr list --only-installed
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r-dependencies@v2
