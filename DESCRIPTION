@@ -12,6 +12,7 @@ Depends: R (>= 2.10.0)
 Imports: utils, tools
 Suggests: knitr
 BugReports: https://r-forge.r-project.org/projects/sweavesearch/
-SystemRequirements:  The 'Japanese.Rnw' vignette requires uplatex and dvipdfmx.
-VignetteBuilder:  patchDVI
+SystemRequirements: The 'Japanese.Rnw' vignette requires uplatex and dvipdfmx.
+VignetteBuilder: patchDVI
 Encoding: UTF-8
+URL: https://dmurdoch.github.io/patchDVI/
