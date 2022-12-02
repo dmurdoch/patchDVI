@@ -24,6 +24,36 @@ SweavePDFMiktex( Rnw = Rnw,
                  weave = weave,
                  ...)
 
+renderPDFMiktex <- function(Rmd, main,
+                           cmd="texify --pdf",
+                           options="--tex-option=-synctex=-1 --tex-option=-interaction=nonstopmode",
+                           includedir="--tex-option=-include-directory=",
+                           stylepath=FALSE,
+                           source.code=NULL,
+                           make=1,
+                           preview=NULL,
+                           patchLog = TRUE,
+                           sleep = 0,
+                           weave = rmarkdown::render,
+                           ...) {
+  test_rmarkdown()
+  SweavePDFMiktex( Rnw = Rmd,
+                 main = main,
+                 cmd = cmd,
+                 options = options,
+                 includedir = includedir,
+                 stylepath = stylepath,
+                 source.code = source.code,
+                 make = make,
+                 preview = preview,
+                 patchLog = patchLog,
+                 sleep = sleep,
+                 weave = weave,
+                 output_options = list(run_latex = FALSE),
+                 envir = parent.frame(),
+                 ...)
+}
+
 SweavePDFMiktex <- function( Rnw, main,
                              cmd="texify --pdf",
                              options="--tex-option=-synctex=-1 --tex-option=-interaction=nonstopmode",
@@ -83,6 +113,29 @@ knitPDF <- function( Rnw, main,
              weave = weave,
              ...)
 
+renderPDF <- function( Rmd, main,
+                     texinputs=NULL,
+                     source.code=NULL,
+                     make=1,
+                     links = NULL,
+                     preview = NULL,
+                     patchLog = TRUE,
+                     weave = rmarkdown::render,
+                     ...  ) {
+  test_rmarkdown()
+  SweavePDF( Rnw = Rmd, main = main,
+             texinputs = texinputs,
+             source.code = source.code,
+             make = make,
+             links = links,
+             preview = preview,
+             patchLog = patchLog,
+             weave = weave,
+             output_options = list(run_latex = FALSE),
+             envir = parent.frame(),
+             ...)
+}
+
 SweavePDF <- function( Rnw, main,
                        texinputs=NULL,
                        source.code=NULL,
@@ -139,6 +192,36 @@ SweaveDVIPDFM(Rnw = Rnw, main=main,
               patchLog = patchLog,
               weave = weave,
               ... )
+
+
+renderDVIPDFM <- function(Rmd, main,
+                        latex = "latex",
+                        latexOpts = "-synctex=1 -interaction=nonstopmode",
+                        dvipdfm = "dvipdfm",
+                        dvipdfmOpts = "",
+                        texinputs=NULL,
+                        source.code=NULL,
+                        make=1,
+                        preview = NULL,
+                        patchLog = TRUE,
+                        weave = rmarkdown::render,
+                        ... ) {
+  test_rmarkdown()
+  SweaveDVIPDFM(Rnw = Rmd, main=main,
+              latex = latex,
+              latexOpts = latexOpts,
+              dvipdfm = dvipdfm,
+              dvipdfmOpts = dvipdfmOpts,
+              texinputs=texinputs,
+              source.code=source.code,
+              make=make,
+              preview = preview,
+              patchLog = patchLog,
+              weave = weave,
+              output_options = list(run_latex = FALSE),
+              envir = parent.frame(),
+              ... )
+}
 
 SweaveDVIPDFM <- function(Rnw, main,
                           latex = "latex",

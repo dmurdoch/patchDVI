@@ -1,6 +1,7 @@
 \name{SweaveAll}
 \alias{SweaveAll}
 \alias{knitAll}
+\alias{renderAll}
 \alias{.SweaveFiles}
 \alias{.TexRoot}
 \alias{.PostSweaveHook}
@@ -8,21 +9,24 @@
 Apply Sweave to a collection of files.
 }
 \description{
-This function allows a master Sweave input file to specify other files in the 
+This function allows a master Sweave input file to specify other files in the
 project.  All modified files will be run through \code{\link{Sweave}}.  Following
 the run, several post-processing steps may be performed.
 }
 \usage{
-SweaveAll(SweaveFiles, make = 1, PostSweaveHook = NULL, 
-          force = TRUE, verbose = FALSE, 
+SweaveAll(SweaveFiles, make = 1, PostSweaveHook = NULL,
+          force = TRUE, verbose = FALSE,
           weave = utils::Sweave, ...)
-knitAll(RnwFiles, make = 1, PostKnitHook = NULL, 
-          force = TRUE, verbose = FALSE, 
-          weave = knitr::knit, ...)          
+knitAll(RnwFiles, make = 1, PostKnitHook = NULL,
+          force = TRUE, verbose = FALSE,
+          weave = knitr::knit, ...)
+renderAll(RmdFiles = NULL, make = 1, PostKnitHook = NULL,
+          force = TRUE, verbose = FALSE,
+          weave = rmarkdown::render, ...)
 }
 \arguments{
-  \item{SweaveFiles, RnwFiles}{character vector naming the files to 
-  run through \code{weave}.  
+  \item{SweaveFiles, RnwFiles, RmdFiles}{character vector naming the files to
+  run through \code{weave}.
 }
   \item{make}{
   integer indicating which files to run \code{weave} on.  See below.
@@ -39,7 +43,7 @@ knitAll(RnwFiles, make = 1, PostKnitHook = NULL,
   }
   \item{weave}{
   The function to be used for converting from source to \file{.tex}.
-It will be called as \code{weave(filename, ...)} for each file 
+It will be called as \code{weave(filename, ...)} for each file
 in \code{SweaveFiles} and other files identified as needing weaving.
   }
   \item{\dots}{
@@ -47,8 +51,8 @@ in \code{SweaveFiles} and other files identified as needing weaving.
 }
 }
 \details{
-This function runs \code{weave} repeatedly. It starts by 
-checking for a global variable \code{.SweaveFiles}, and 
+This function runs \code{weave} repeatedly. It starts by
+checking for a global variable \code{.SweaveFiles}, and
 augments the \code{SweaveFiles} argument with any unprocessed
 files in that list.  It then runs \code{weave}
 on each file listed in \code{SweaveFiles}.

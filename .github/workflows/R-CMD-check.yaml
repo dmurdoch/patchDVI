@@ -58,4 +58,3 @@ jobs:
           upload-snapshots: true
           build_args:  '"--no-build-vignettes"'
           args:  '"--ignore-vignettes"'
-

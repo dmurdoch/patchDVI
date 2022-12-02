@@ -25,6 +25,37 @@ SweaveMiktex(Rnw = Rnw,
              weave = weave,
              ...)
 
+renderMiktex <- function(Rmd,
+                       main,
+                       cmd="texify",
+                       options="--tex-option=-src-specials --tex-option=-interaction=nonstopmode",
+                       includedir="--tex-option=--include-directory=",
+                       stylepath=FALSE,
+                       source.code=NULL,
+                       make=1,
+                       preview='yap "%s"',
+                       patchLog = TRUE,
+                       sleep = 0,
+                       weave = rmarkdown::render,
+                       ...) {
+  test_rmarkdown()
+  SweaveMiktex(Rnw = Rmd,
+             main = main,
+             cmd = cmd,
+             options = options,
+             includedir = includedir,
+             stylepath = stylepath,
+             source.code = source.code,
+             make = make,
+             preview = preview,
+             patchLog = patchLog,
+             sleep = sleep,
+             weave = weave,
+             output_options = list(run_latex = FALSE),
+             envir = parent.frame(),
+             ...)
+}
+
 SweaveMiktex <- function(Rnw,
                          main,
                          cmd="texify",
@@ -85,6 +116,31 @@ knitDVI <- function( Rnw, main,
              patchLog = patchLog,
              weave = weave,
              ...)
+
+
+renderDVI <- function( Rmd, main,
+                     texinputs=NULL,
+                     source.code=NULL,
+                     make=1,
+                     links=NULL,
+                     preview=NULL,
+                     patchLog = TRUE,
+                     weave = rmarkdown::render,
+                     ... ) {
+  test_rmarkdown()
+  SweaveDVI( Rnw = Rmd,
+             main = main,
+             texinputs = texinputs,
+             source.code = source.code,
+             make = make,
+             links = links,
+             preview = preview,
+             patchLog = patchLog,
+             weave = weave,
+             output_options = list(run_latex = FALSE),
+             envir = parent.frame(),
+             ...)
+}
 
 SweaveDVI <- function( Rnw, main,
                        texinputs=NULL,

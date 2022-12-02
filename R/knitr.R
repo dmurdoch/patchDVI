@@ -13,7 +13,7 @@ defSconcordance <- function() cat('
 ')
 
 useknitr <- function(writeMacro) {
-  if (!requireNamespace("knitr"))
+  if (!requireNamespace("knitr", quietly = TRUE))
     stop("This function requires the knitr package.")
   knitr::opts_knit$set(concordance = TRUE)
   infile <- knitr::current_input()

@@ -1,0 +1,802 @@
+---
+title: "The patchDVI package"
+author: "Duncan Murdoch"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{The patchDVI package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: patchDVI.bib
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Abstract
+
+The `patchDVI` package works with Sweave [@Leisch02],  knitr [@Xie2013] and R Markdown [@Xie2022]
+and document previewers to facilitate editing:  it modifies the links
+that LaTeX puts into the output so that they refer to the original
+source.  It also includes a few project management functions to
+make large multi-file documents easier to handle, and
+can include source links ("concordances") in HTML output from
+R Markdown.
+}
+
+# Introduction
+
+Most implementations of LaTeX allow source references to be emitted, so
+that previewers of the `.dvi` or `.pdf` output file can
+link back to the original source line.  This was a feature of the
+`yap` previewer for `.dvi` files in MikTeX [@Schenk10]
+for many
+years.  Support for source references has appeared more recently
+for `.pdf`
+output, first in `pdfsync`.  More recently
+Synctex [@Laurens08] links have been
+implemented in `pdflatex` and other LaTeX processors.
+
+Unfortunately for knitr/Sweave/R Markdown users, these links point to the `.tex`
+source that was processed, which is not the true source code in the
+knitr/Sweave `.Rnw` or R Markdown `.Rmd` or other input file.  (I will
+refer to all of these as `.Rnw` files.)
+Clicking on "go to source"
+in a previewer will jump to the `.tex` file; changes made there
+will be lost the next time the `.Rnw` input is processed.
+
+I wrote the `patchDVI` package to address this problem.  It works as
+follows.  If the knitr/Sweave file is processed with the option
+`concordance=TRUE`, knitr or Sweave will output a record of the
+concordance between the lines in the input file and the output file.
+When the file is processed by LaTeX, this information is embedded in
+the output.  (Details of the embedding are described in sections [Concordances](#concordances)
+to [Patching Synctex Files](#patching-.synctex-files) below.)  After
+producing the `.dvi` or `.pdf` file, a `patchDVI`
+function is run to read the concordance information and to patch the
+source reference information produced by LaTeX.  Once this has been
+done, previewers will see references to the original `.Rnw` source
+rather than the LaTeX intermediate file.
+
+A 2022 addition follows a similar process with R Markdown files.
+In this case, the output driver in the YAML header needs to be
+changed, for example to
+`patchDVI::pdf_documentC`.  The driver
+automates the steps described above.  At the present time there are
+some notable limitations in R Markdown handling.  These are
+described in [R Markdown Instructions](#r-markdown-instructions).
+
+Besides the technical details mentioned above,
+this paper describes the history of `patchDVI` in Section [`patchDVI` History](#patchdvi-history) and
+in section [Project Management Functions](#project-management-functions) some
+project management functions.  It concludes with a short discussion.
+
+# Quick Start Instructions
+
+There are several ways to make use of `patchDVI`.  This section
+describes some common ones for Sweave/knitr.  Section 
+[R Markdown Instructions](#r-markdown-instructions)
+deals with R Markdown.
+
+In all cases the package needs to be installed first; the current release
+is on CRAN and can be installed using
+```r
+install.packages("patchDVI")
+```
+Source code is maintained on Github and the latest development version
+can be installed using
+```r
+remotes::install_github("dmurdoch/patchDVI")
+```
+
+With `.Rnw` files for knitr or Sweave, the
+document also needs to have an option set to produce the "concordances" (links between the
+`.Rnw` source and the `.tex` output of knitr/Sweave).  If you are using knitr, include these lines in a code chunk in your document:
+```r
+opts_knit$set(concordance = TRUE)
+```
+For Sweave, put these lines outside of a code chunk
+near the start of
+your document:
+```latex
+\usepackage{Sweave}
+\SweaveOpts{concordance=TRUE}
+```
+
+The simplest way to proceed is from within R.  Assuming `doc.Rnw`
+is the knitr/Sweave document to process and it is in the current working directory, run
+```r
+library(patchDVI)
+knitPDF("doc.Rnw")
+```
+or
+```r
+library(patchDVI)
+SweavePDF("doc.Rnw")
+```
+This runs  `doc.Rnw` through knitr/Sweave, runs any other chapters in the
+project through knitr/Sweave, then runs the main `.tex` file (typically
+`doc.tex`, but not necessarily; see section 
+[Project Management Functions](#project-management-functions) below)
+through `pdflatex`, and patches the source links.  To produce DVI
+output
+instead of PDF substitute `knitDVI` for
+`knitPDF`, and to use `latex` and `dvipdfm`
+to produce PDF output, use `knitDVIPDFM`.
+If you are using MikTeX on Windows, the
+functions `knitPDFMiktex` and
+`knitMiktex` correspond to the first two of these respectively,
+and use a few MikTeX-specific features.
+
+These functions all have an optional argument `preview`, which
+can contain a command line to run a `.pdf` or `.dvi` previewer
+(with the filename replaced by `%s`).  The `.pdf` previewer
+should be one that can handle Synctex links; unfortunately, Acrobat
+Reader and MacOS Preview are both deficient in this area. On
+Windows, `SumatraPDF` works, as do the built-in previewers
+in TeXShop and TeXWorks on MacOS X and other platforms.
+
+MikTeX includes the `yap`
+previewer for `.dvi` files; the `knitMiktex` command sets it
+as the default.
+
+Another way to proceed is directly from within your text editor.  The
+instructions here depend on your editor; I have included a few in the
+Appendices: TeXShop in [Using `patchDVI` with TeXShop](#using-patchdvi-with-texshop), WinEdt in
+[Using `patchDVI` with WinEdt](#using-patchdvi-with-winedt), and TeXWorks in 
+[Using `patchDVI` with TeXWorks](#using-patchDVI-with-texworks). Some editors (e.g. TeXShop and TeXWorks)
+include a previewer that can handle the source links.
+
+Finally, you may want to run knitr from the command line, outside of R.  This line (or the obvious variants
+with replacements for `knitPDF`) should do it:
+```
+Rscript -e 'patchDVI::knitPDF("doc.Rnw")'
+```
+
+# R Markdown Instructions
+
+The most recent addition to `patchDVI` is support for R Markdown
+input.  R Markdown [@Allaire2022] has become very popular in
+recent years, with `.Rmd` input nowadays exceeding the
+popularity of Sweave-style
+`.Rnw` input.  The general structure is that each file contains a ``YAML
+header'' giving configuration information, and this is followed
+by a mix of text in a Markdown dialect and code in R or another
+language.
+
+To use `patchDVI` with R Markdown, you will currently need several
+unreleased packages.  These may be installed using
+```r
+remotes::install_github("dmurdoch/backports")
+remotes::install_github("dmurdoch/knitr")
+remotes::install_github("dmurdoch/patchDVI")
+```
+The `backports` package supplies some functions from R
+which are not available in pre-4.3.0 versions.  The `knitr` package
+has small changes to enable concordance output for R Markdown
+documents.  Finally, the latest changes to `patchDVI` have not yet made
+it to CRAN.
+
+With those versions installed, you then change the `output`
+setting in the YAML.  If it was `pdf_document`, use
+```
+output: patchDVI::pdf_documentC
+```
+instead.  If it
+was `html_document`, use
+```
+output patchDVI::html_documentC
+```
+That should be
+all that is necessary to enable concordances and to carry out the
+necessary patching.  Almost all options in the original drivers
+are supported in these replacements, plus a few more.  See the
+help pages for details.
+
+It is also possible to use analogs of the 
+`SweavePDF`/`knitPDF` family of
+functions; the ones intended for Markdown source are
+`renderMiktex`, `renderPDFMiktex`, `renderDVI`,
+`renderPDF`, `renderDVIPDFM` and `renderAll`.
+
+## Known limitations of Markdown support
+
+The Markdown support relies on a relatively recent addition to
+Pandoc, the `sourcepos` extension.  At present (Pandoc 2.18
+as included in RStudio), this extension
+only works with the Commonmark reader, whereas by default, Pandoc
+uses its own dialect of Markdown.  To enable concordances,
+`patchDVI` switches the Pandoc input setting to `commonmark_x+sourcepos`.
+
+Unfortunately, the `commonmark_x` reader doesn't support most of
+the extensions that the standard `markdown` reader supports.
+This page:  https://github.com/jgm/pandoc/wiki/Roadmap lists the current status.
+For the definitions of the extensions, see the Pandoc documentation
+at https://pandoc.org/MANUAL.html.
+
+Of particular note are the lack of `citations` and
+`raw_tex`.  Citations in Markdown source like `[@Author]`
+will not currently be processed in Commonmark, though
+support for this is planned at some future time.  Raw LaTeX  will need to be "fenced", e.g. entered as
+````
+```{=latex}
+LaTeX
+```
+````
+(The `\pagebreak` and `\newpage` macros receive special
+treatment, so they don't need fencing
+as long as they are separated by blank lines from text above and
+below.)
+The "roadmap" indicates that raw LaTeX will never be supported
+in Commonmark, as it is incompatible.
+
+# `patchDVI` History
+
+Initially  `patchDVI` only worked for `.dvi` files (hence the name).
+It required changes to the Sweave function in R, which
+first appeared around the release of R version
+2.5.0. with incompatible changes in R version 2.8.0 when `.pdf`
+support was added to `patchDVI`.
+
+Using `patchDVI` requires a pre-processing step (knitr/Sweave), LaTeX
+processing, and a post-processing step (patching).  This is usually
+followed by a preview of the resulting output file.  It quickly became
+apparent that it was convenient to package these steps into a
+single R function, so the user only needed to make a single call.  But
+the details of LaTeX  processing vary from platform to platform, so I
+wrote functions `SweaveMiktex` and `SweavePDFMiktex`
+specific to the MikTex platform, with the intention of adding
+others as I used them or users told me what needed adding.  This never happened,
+but in the meantime, Brian Ripley made the `tools::texi2dvi()` function
+in R much more flexible, and in version 1.7 of
+`patchDVI` I included a modified version of it with the hope that
+`patchDVI` should be more nearly platform neutral.
+
+The 1.7 release was motivated by an attempt to support TeXWorks [@Kew10], a
+cross-platform LaTeX targetted editor.  TeXWorks was still in its early
+days (I was working with version 0.2 on Windows), and it did not have
+enough flexibility to handle large knitr/Sweave projects, where for example, each
+chapter of a book requires separate knitr/Sweave processing, but LaTeX processes
+only a main wrapper file.  This prompted me to include more `make`-style
+capabilities into `patchDVI`.  It is now possible to specify a list of
+knitr/Sweave input files to process (optionally only if they have changed since the
+last processing) and the main wrapper file, all within code chunks
+in a single file, using the `knitAll()`/`SweaveAll()` functions.
+
+The `SweaveDVIPDFM()` function followed later.
+For English language processing, I find `pdflatex` to be the most
+convenient processor, but it does not work well in languages like
+Japanese.  During a visit to the Institute of Statistical Mathematics
+in Tokyo I learned of the issues, and with the help of Prof. H. Okumura
+and Junji Nakano I worked out `SweaveDVIPDFM()` to handle the two
+step conversion to PDF.
+
+In 2015 I added support for other non-Sweave processors,
+such as knitr, and in 2020 improved the documentation
+for knitr users.  The most recent addition is the support
+for R Markdown in 2022.
+
+# Concordances
+
+knitr/Sweave processes the code chunks in the `.Rnw` file, replacing each
+with the requested output from the command.  This means that the output `.tex`
+file alternates between copied LaTeX source and newly produced blocks of
+output.  Each line in the `.tex` file can thus be mapped to
+one or more lines of input, and that is what the concordance does.
+
+## Technical description of concordance records
+
+The concordance records are text records in the following format.  There are
+four parts, separated by colons:
+
+1. The label `concordance` to indicate the type of record.
+2. The output `.tex` filename.
+3. The input `.Rnw` filename.
+4. The input line numbers corresponding to each output line.
+
+The third component is compressed using a simple encoding:  The first
+number is the first line number; the remainder of line numbers are a
+run-length encoding of the differences.  Thus if the input file is as
+shown here:
+
+Line number | Input text
+------------| ---------
+1 | `\SweaveOpts{concordance=TRUE}`
+2 | This is text
+3 | `<<>>=`
+4 | `123`
+5 |  `@`
+6 | This is more text 
+
+
+the output file would be as
+shown below, with the concordance as shown there in the second column.
+
+Output line | Input line |  Output text
+----------- | ---------- |  -----------
+1 | 1 | `\input{sample-concordance}` 
+2 | 2 | This is text. 
+3 | 4 | `\begin{Schunk}` 
+4 | 4 | `\begin{Sinput}` 
+5 | 4 | `> 123` 
+6 | 4 | `\end{Sinput}` 
+7 | 4 | `\begin{Soutput}` 
+8 | 4 | `[1] 123` 
+9 | 4 | `\end{Soutput}` 
+10 | 4 | `\end{Schunk}` 
+11 | 6 | This is more text 
+
+This concordance would be recorded in the file `sample-concordance.tex`
+as
+```
+\Sconcordance{concordance:sample.tex:sample.Rnw:%
+1 1 1 1 2 7 0 1 2}
+```
+The numeric part of this file may be interpreted as shown below:
+
+Values | Interpretation | Expansion 
+------ | -------------- | ---------
+`1` | line 1  | 1 
+`1 1` | 1 increase of 1 | 2 
+`1 2` | 1 increase of 2 | 4 
+`7 0` | 7 increases of 0 | 4 4 4 4 4 4 4 
+`1 2` | 1 increase of 2 | 6
+
+The same format for concordance records is used in R Markdown,
+but when the output format is HTML, the target file
+is skipped and it is wrapped in an HTML
+comment instead, e.g.
+```
+<!-- concordance::sample.Rnw:1 1 1 1 2 7 0 1 2 -->
+```
+
+## Patching `.dvi` Files
+
+The `\Sconcordance` macro expands to a `\special` macro when
+producing a `.dvi` file.  This is included verbatim in the `.dvi`
+file. The `concordance:` prefix identifies it as a `patchDVI` concordance.
+The `patchDVI()` function scans the whole file until it finds
+this sort of record.  (There may be more than one, if multiple files make up
+the document.)  Source references are also recorded by LaTeX in `\special` records;
+their prefix is `src:`.  The `patchDVI()` function reads
+each `src:` special and if it refers to a file in a `concordance:` special,
+makes the substitution.  At the end, it rewrites the whole `.dvi` file.
+
+
+## Patching `.synctex` Files
+
+When using `pdflatex`, the `\Sconcordance` macro expands to a
+`\pdfobj` macro containing the concordance, which eventually is
+embedded in the `.pdf` file.  However, the Synctex scheme of
+source references does not write the references to the `.pdf` file
+directly.  Instead, they are written to a separate file with extension
+`.synctex`, or a compressed version of that file, with
+extension `.synctex.gz`.  The `patchSynctex()` function
+reads the concordances from either the `.pdf` file (when `pdflatex`
+was used) or the `.dvi` file, and the source
+references from the Synctex file.  It rewrites only
+the Synctex file when it makes its changes.
+
+## Patching `.html` Files
+
+If R Markdown has an HTML target, the concordances are embedded by
+Pandoc in
+`span` and `div` markup, e.g.
+```html
+<span data-pos="sample.knit.md@13:1-13:5">This</span>
+```
+The driver reads the `data-pos` attributes, works out the
+corresponding line from the true source file, and rewrites
+the concordances using the concordance record in a comment
+as described at the end of Section [Technical description of concordance records](#technical-description-of-concordance-records).
+
+Currently
+I am only aware of one use for these values:  the HTML Tidy
+checks done in R 4.3.x will report the original source lines
+in the `.Rmd` file.  If I become aware of other uses
+for these records, it seems likely this format will
+need to change.
+
+# Project Management Functions
+
+As mentioned above, there are a number of steps involved in running `patchDVI`
+with a complex knitr/Sweave project:
+
+1. Run knitr/Sweave on each input file.
+2. Run LaTeX on the main wrapper file.
+3. Run the appropriate `patchDVI()` function on the output file.
+4. Preview or print the result.
+
+Moreover, step 1 needs to be repeated once for each `.Rnw` file, but only
+if the content has changed since the last run, while the other steps need only
+be done once.
+
+To manage this complication, the `patchDVI` package includes simple
+project management functions, `knitAll()`, `renderAll()` and
+`SweaveAll()`.  These are really the same function with different
+defaults, and will be described in terms of `SweaveAll()`.
+This function runs Sweave
+on multiple files and determines the name of the main wrapper file.  It is
+used internally by the functions described in [The Complete Process](#the-complete-process)
+below, but can also be called directly by the user.
+
+Here is how it works.  `SweaveAll()` takes a vector
+of filenames as input, and runs Sweave on each.  After each run, it examines the
+global environment for the four variables `.PostSweaveHook`,
+`.SweaveFiles`, `.SweaveMake` and `.TexRoot`.
+(The first three variables can instead be named  `.PostKnitHook`,
+`.knitFiles`, `.knitMake`.  If both versions are
+present, the choice is undefined, so don't do that.)
+
+A code chunk in a `.Rnw` file may produce a function (or the name of
+a function; `match.fun()` is used to look it up) named `.PostSweaveHook`.
+If present, this should be a function taking a single argument.
+Immediately after running Sweave,
+`SweaveAll()` will call this function, passing the name of the
+`.tex` output file as the only argument.  The hook can do any
+required postprocessing, for example, it could remove local
+pathnames from output strings.
+
+The optional parameter `PostSweaveHook` to the `SweaveAll()` function
+can provide a default hook function.  Hooks specified using the `.PostSweaveHook` variable
+take precedence in any given input file.
+
+`SweaveAll()` will also use the character variable
+named `.SweaveFiles`.  It should contain the names of  `.Rnw`
+files in the project.  If no corresponding `.tex` file exists, or the
+`.Rnw` file is newer, they will be run through Sweave.  They may in
+turn name additional `.Rnw` files to process; each file is processed
+only once, even if it is named several times.
+
+There is an optional parameter named `make` to the `SweaveAll()` function.
+If `make == 1` (the default), things proceed as described above.  If `make == 0`,
+the `.SweaveFiles` variable is ignored, and only the explicitly named
+files in the call to `SweaveAll()` are processed.  If `make == 2`, then
+all files are processed, whether they are newer than their `.tex`
+file or not.  The `.SweaveMake` variable will override the value
+of `make`.
+
+An `.Rnw` file may also set the value of `.TexRoot` to the name of
+a `.tex` file.  If it does, then that is the file that should be passed
+to LaTeX for processing.  If none is given, then the first file in the call
+to `SweaveAll()` will be assumed to be the root file.  (If multiple
+different `.TexRoot` variables are specified by different `.Rnw`
+files, one of them will be used, but it is hard to predict which:  so don't do
+that.)  Whichever file is determined to be the root file is the name returned
+by the `SweaveAll()` call.
+
+`SweaveAll()` is called by all of the functions described in
+[The Complete Process](#the-complete-process) below to do step 1 of the `patchDVI` steps.
+
+The workflow this is designed for is as follows.  Each `.Rnw`
+chapter (named for example `chapter.Rnw`)
+in a large project should specify the `.TexRoot`, e.g. using the
+code chunk
+```
+ <<echo=FALSE>>=
+ .TexRoot <- "wrapper.tex"
+ @
+```
+Similarly, the wrapper file (named for example
+`wrapper.Rnw`) should be a `.Rnw` file that sets
+`.SweaveFiles` to the complete list of files in the project.
+Then one can build an initial copy of the entire document by calling
+any of `r paste0("\x60", outer(c("knit", "Sweave", "render"), c("PDF", "Miktex", "DVI", "DVIPDFM"), paste0), "\x60", collapse=", ")`
+with argument `"wrapper.Rnw"`.
+Later, while one is working on `chapter.Rnw`, one can call
+one of those functions
+with argument `"chapter.Rnw"`
+and the chapter will be processed through
+the full sequence, without running knitr/Sweave/R Markdown on the other chapters.
+
+More complicated schemes are possible.  For example:
+
+- Each chapter can have subsections in separate
+files; then the chapter would name the subsections, but the main wrapper would only
+need to name the chapters if you can assume that only the chapter
+being edited was changed.
+- If one wants to `make` the full project every time,
+then include `"wrapper.Rnw"` in `.SweaveFiles` in each chapter.
+
+
+## The Complete Process
+
+The `patchDVI` package contains five functions for each
+of knitr,  R Markdown and Sweave designed to run all
+four of the steps listed at the start of this section.  
+
+The functions
+are all named in the same style:  *Stage1Stage2*, where
+*Stage1* is one of `knit`, `render`, or `Sweave`, and *Stage2* is one of `DVI`, 
+`Miktex`, `PDF`, `PDFMiktex`, `dvipdfm`.
+The full list was given near the end of the introduction to Section [Project Management Functions](#project-management-functions).  The *Stage1* parts
+specify the initial processor as being `knitr::knit`, `Sweave`, or `rmarkdown::render`.  The *Stage2*
+part specifies how the resulting `.tex` files are processed:
+`knitDVI` and `knitMiktex` and related functions produce `.dvi` files 
+in the general case and for MikTeX respectively; `knitPDF` and
+`knitPDFMiktex` and friends do the same for direct `.pdf` output
+from `pdflatex`.  Finally, `knitDVIPDFM` and 
+related functions run
+the two-step conversion using first `latex` and then `dvipdfm`.
+
+In each case, the LaTeX processing functions are customizable.
+
+For example, a few years ago I had a text editor that allowed me to call external
+functions with arguments depending on the name of the current file and
+the line number within it.  I had it call a Windows batch file
+with the line set as argument `%1` and the filename
+set as argument `%2`; the batch
+file invoked R using the command line
+```
+echo patchDVI::SweaveMiktex('%2',
+    preview='yap -1 -s"%1%2" "\x25s"')
+    | Rterm --slave
+```
+(all on one long line).  This passed the current file to `SweaveMiktex()`,
+and set the preview command to use the `yap` options `-1` to
+update the current view (rather than opening a new window), and to jump to the
+line corresponding to the editor line.  The code `"\x25s"` is simply
+`"%s"` encoded without an explicit percent sign, which would be
+misinterpreted by the Windows command processor.  When `patchDVI` calls
+the previewer, the main `.dvi` filename will be substituted for
+`%s`.
+
+
+## Installing or Loading Packages
+
+In a complex project, there are often a number of different packages
+required.  When updating R, you may end up with a tedious exercise to
+make sure these are all installed and updated.
+
+The `needsPackages()` function helps with this.  It takes a
+character vector naming packages that will be used in the current
+document.  By default, it installs any that are not already installed.
+Optionally, it can update them using `update.packages()`,
+load them, or attach them to the search list.  For example, this
+document uses no packages other than `patchDVI` itself,
+so it could have
+```r
+patchDVI::needsPackages("patchDVI")
+```
+near the start to ensure it is available, if this wasn't a
+nonsensical statement.  (Why would you be able to run it if `patchDVI` wasn't already installed?)
+
+
+# Conclusion
+
+As described in this vignette, the `patchDVI` package is a convenient way
+to work with knitr/Sweave in a modern setting, allowing fast switching from
+source input to preview.  It also offers some features to make the
+management of larger projects easier.
+
+Other possibilities may exist to make use of the code in this package.  In
+order to read and patch `.dvi`, `.pdf` and `.synctex`
+files, `patchDVI` includes code to work with each of those formats.  Users may
+find imaginative uses for this capability, which I've tried to leave
+in general form.  The low-level `.dvi` editing is done by C functions
+called from R, while the PDF related work is done in pure R code.
+
+# Appendices
+
+## Using `patchDVI` with TeXShop
+
+TeXShop is a nice LaTeX editor on MacOS.  Dave Gabrielson of the University of Manitoba helped me to work
+out these instructions.  I have updated them in December, 2013 for TeXShop 2.47.
+
+1. In `Preferences -- Typesetting -- Sync Method`, choose `SyncTeX`.
+2. Instructions depend on which language you are using.
+   a. To use with Sweave, create a file called
+   `Library/TeXShop/Engines/Sweave.engine` in your home directory
+   containing the lines below.  Give it executable permissions.  Replace `<locale>` with
+your locale string, e.g. `en_CA.UTF-8` for Canadian English using UTF-8 encoding.  The
+locale line can be omitted if you only use plain ASCII characters, but is probably necessary
+for other cases.
+   ```
+   #!/bin/bash
+   export LC_ALL=<locale>
+   Rscript -e "patchDVI::SweavePDF('$1')"
+   ```
+   
+    b. To use with knitr, create a file called
+`Library/TeXShop/Engines/knitr.engine` in your home directory
+containing the lines below, and give it executable permissions.  Replace `<locale>` with
+your locale string, e.g. `en_CA.UTF-8` for Canadian English using UTF-8 encoding.  The
+locale line can be omitted if you only use plain ASCII characters, but is probably necessary
+for other cases.
+   ```
+   #!/bin/bash
+   export LC_ALL=<locale>
+   Rscript -e "patchDVI::knitPDF('$1',\
+       envir = globalenv())"
+   ```
+    c. To use with R Markdown, create a file called
+`Library/TeXShop/Engines/markdown.engine` in your home directory, and give it executable permissions.  Replace `<locale>` with
+your locale string, e.g. `en_CA.UTF-8` for Canadian English using UTF-8 encoding.  The
+locale line can be omitted if you only use plain ASCII characters, but is probably necessary
+for other cases.
+    ```
+    #!/bin/bash
+    export LC_ALL=<locale>
+    Rscript -e "patchDVI::renderPDF('$1',\
+      envir = globalenv())"
+    ```
+    d. For other vignette engines, use a `weave` argument in the above, as appropriate.
+3. Install the `patchDVI` package into R.
+4. When editing a `.Rnw` file in TeXShop, choose the knitr or Sweave engine from the menu; for `.Rmd` files, use the markdown
+engine.
+5. If you have multiple files in your project, your main file must be a `.Rnw` file
+(e.g. `Main.Rnw`) which lists all `.Rnw` files in a `.SweaveFiles` variable,
+and you need to add the line
+```
+%!TEX root = Main.Rnw
+```
+to each subordinate file.
+6. For Sweave, add the `\SweaveOpts{concordance=TRUE}` line to your document.  For knitr, add a code chunk
+similar to this:
+```
+ <<results='asis'>>=
+ patchDVI::useknitr()
+ @
+```
+somewhere near the start of your document.
+
+
+The TeXShop previewer supports SyncTeX; you right click in the preview, and choose Sync from the menu
+to jump to your source location.
+
+## Using `patchDVI` with TeXWorks
+
+TeXWorks is an editor for multiple platforms,
+somewhat similar to TeXShop.  These instructions
+have been tested in version 0.4.5, with MikTeX 2.9 on Windows,
+and version 0.6.2 from MacTeX on MacOS.
+
+NB:  Some versions of TeXWorks had a bug in setting the `HOME` directory
+of the user.  With those versions, R will not find a locally installed
+copy of `patchDVI`.  To work around the bug, set the `R_USER`
+environment variable to your Windows home directory, e.g. `R_USER=C:/Users/Murdoch`.
+
+TeXWorks can work with the `patchDVI`
+project management features using a script
+to tell it to process the current file through knitr/Sweave, but preview
+the main file.  See the instructions below for my current best attempt at such
+a script.  It can also use the TeXShop approach of specifying
+the TEX root file to be a `.Rnw` file.
+
+The instructions are given first for Sweave, then below for knitr.
+
+1. Add a new `SweavePDF` command:  In `Edit | Preferences | Typesetting`
+click on the `+` sign near the bottom.  Set the name of the tool to be `SweavePDF`.
+Set the program to `Rscript`, and
+add two arguments, one per line:
+   a. `-e`
+   b. `patchDVI::SweavePDF('$fullname')`
+2. Install the `patchDVI` package into R.
+3. Tell TeXWorks to open Sweave files by editing the file pattern configuration file `texworks-config.txt`.
+This file is in the `configuration` folder of the TeXWorks home directory.  For example, I have this
+line in my file:
+```
+file-open-filter:	Sweave and TeX documents (*.Rnw *.tex)
+```
+4. When editing a `.Rnw` file in TeXWorks, choose the `SweavePDF` engine from the menu.
+5. Add the `\SweaveOpts{concordance=TRUE}` line to your document.
+6. If you are using the project management features of `patchDVI` and are
+editing a subordinate file, TeXWorks will not open or update the PDF preview after it processes changes.
+There are four workarounds for this.
+
+The simplest is to manually open the `.pdf` file the first time.  After that it will be updated
+automatically.  Unfortunately, if you happen to be editing the main file, the `.pdf` will be opened
+automatically, and then updates won't happen if you later edit a subordinate file.
+
+The next simplest is the TeXShop approach:  include a line
+```
+%!TEX root = Main.Rnw
+```
+near the top of the file, and make sure that `Main.Rnw` refers
+to all subordinate Sweave files.
+
+To use TeXWorks with knitr, the instructions are very similar to those above, but with two changes.
+
+In step 1, replace the second line of the command (the `SweavePDF()` call) with the following longer command, all on one line:
+```
+patchDVI::knitPDF('$fullname', envir = globalenv())
+```
+
+In step 5, insert the following code chunk
+into your file:
+```
+ <<results='asis'>>=
+ patchDVI::useknitr()
+ @
+```
+
+To use TeXWorks with R Markdown, make these changes:
+
+In step 1, replace the second line of the command (the `SweavePDF()` call) with the following:
+```
+patchDVI::renderPDF('$fullname', envir = globalenv())
+```
+
+
+## Using `patchDVI` with WinEdt
+
+WinEdt is a Windows editor with LaTeX support.  The configuration options have changed a number of times; I do
+not know how to implement these instructions in the latest version.  These instructions apply to version 5.5,
+and assume you are using it with MikTeX.
+
+1. In `Options -- Execution Modes` choose `Texify`, and click on `Browse for Executable`.  Find the `Rscript` executable
+in your R installation, directory `bin/i386` or `bin/x64`, and choose it.  In the Switches line, put
+```
+-e
+```
+and in the Parameters line, put
+```
+"patchDVI::SweaveMiktex('%n%t', '%N.tex')"
+```
+The quotes are necessary!
+2. Do the same for the PDF Texify command, replacing `SweaveMiktex` with `SweavePDFMiktex`.
+3. In `Options -- Execution modes`, make sure `Start Viewer` and `Forward Search` are selected for LaTeX and PDF LaTeX.
+
+When you preview a file in `yap`, double clicking should jump back to the editor.  If it doesn't (or it opens the wrong editor),
+while you're in `yap` choose `View -- Options -- Inverse DVI search`.
+You should see `WinEdt (auto-detected)` as an option; if so, select it.  If not, create a new entry for WinEdt, and for the command line, put in
+```
+"path\to\winedt.exe" "[Open(|%f|);SelPar(%l,8)]"
+```
+after editing the path as necessary.
+
+## Using `patchDVI` with RStudio
+
+RStudio is a very nice front end for working in R and with
+individual `.Rnw` or Markdown files.  If you are using
+it, I'm going to assume you're using knitr as well, and
+these instructions have been worked out for that combination.
+
+RStudio is less flexible than the other editors for specifying
+customized processing of a file, so these instructions were
+worked out assuming that you already have it configured for
+knitr.  It is probably possible to do something similar for Sweave;
+I just haven't tried.
+
+You need to set up your individual chapter files as for
+TeXShop/TeXWorks, i.e. with a
+```
+%!TEX root = Main.Rnw
+```
+comment at the top of each.  This tells RStudio to run knitr
+on the main file when you click Compile PDF.  (It will also
+work if you use the knitr style
+```
+%!RNW root = Main.Rnw
+```
+but then your files won't work in TeXShop/TeXWorks.)
+
+In the main file, you need a code chunk containing
+a line to set the `.SweaveFiles` variable naming
+all chapter files (but not the main file), and then running `knitInRStudio()`:
+```
+.SweaveFiles <- c("a.Rnw", "b.Rnw")
+patchDVI::knitInRStudio()
+```
+It is safe to put these lines in your file even if you
+sometimes process it in a different way:  if you are
+not in RStudio, `knitInRStudio()` does nothing.
+
+One remaining issue with this approach is that you won't see
+the knitr progress messages from knitting the chapter files.
+If you want to see those messages, add the chunk option
+`childOutput = TRUE` to the code chunk holding this
+code.
+
+# References
+
+
+
+
