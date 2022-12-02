@@ -116,7 +116,10 @@ concordances.</p></dd>
 <span class="r-in"><span>                  output_file <span class="op">=</span> <span class="va">outfile1</span>,</span></span>
 <span class="r-in"><span>                  quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">tools</span><span class="fu">:::</span><span class="fu">tidy_validate</span><span class="op">(</span><span class="va">outfile1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in system2(tidy, c("-language en", "-qe", f), stdout = TRUE, stderr = TRUE):</span> error in running command</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      line  col msg                                       txt              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] "365" "4" "Error: &lt;foobar&gt; is not recognized!"      "&lt;p&gt;&lt;foobar&gt;&lt;/p&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] "365" "4" "Warning: discarding unexpected &lt;foobar&gt;" "&lt;p&gt;&lt;foobar&gt;&lt;/p&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] "365" "1" "Warning: trimming empty &lt;p&gt;"             "&lt;p&gt;&lt;foobar&gt;&lt;/p&gt;"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Next, see them with concordances by setting</span></span></span>
 <span class="r-in"><span><span class="co"># the output format to use patchDVI::html_documentC</span></span></span>
@@ -131,10 +134,15 @@ concordances.</p></dd>
 <span class="r-in"><span>                  output_file <span class="op">=</span> <span class="va">outfile2</span>,</span></span>
 <span class="r-in"><span>                  output_format <span class="op">=</span> <span class="fu">patchDVI</span><span class="fu">::</span><span class="fu"><a href="html_commonmark_document.html">html_documentC</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in test_rmarkdown():</span> patchDVI requires patches to knitr that are available using</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   remotes::install_github('dmurdoch/knitr')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Called from: eval(expr, p)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> debug at /Users/murdoch/svn/MyR/patchDVI/R/processConcordance.R#25: if (length(datapos) == 0) stop("No data-pos attributes found.")</span>
 <span class="r-in"><span><span class="fu">patchDVI</span><span class="fu">:::</span><span class="fu">tidy_validate</span><span class="op">(</span><span class="va">outfile2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in system2(tidy, c("-language en", "-qe", Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_OPTS_",     "--drop-empty-elements no"), f), stdout = TRUE, stderr = TRUE):</span> error in running command</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      line  col msg                                       txt       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] "319" "1" "Error: &lt;foobar&gt; is not recognized!"      "&lt;foobar&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] "319" "1" "Warning: discarding unexpected &lt;foobar&gt;" "&lt;foobar&gt;"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      srcFile      srcLine</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] "Sample.Rmd" "23"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] "Sample.Rmd" "23"   </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
