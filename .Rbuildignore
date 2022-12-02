@@ -3,4 +3,7 @@
 texput.log$
 ^README.Rmd$
 ^.github
-^docs
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
