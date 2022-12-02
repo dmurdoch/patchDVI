@@ -4,6 +4,12 @@
     <loc>https://dmurdoch.github.io/patchDVI/404.html</loc>
   </url>
   <url>
+    <loc>https://dmurdoch.github.io/patchDVI/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://dmurdoch.github.io/patchDVI/articles/patchDVI.html</loc>
+  </url>
+  <url>
     <loc>https://dmurdoch.github.io/patchDVI/authors.html</loc>
   </url>
   <url>
@@ -20,6 +26,12 @@
   </url>
   <url>
     <loc>https://dmurdoch.github.io/patchDVI/reference/defSconcordance.html</loc>
+  </url>
+  <url>
+    <loc>https://dmurdoch.github.io/patchDVI/reference/html_commonmark_document.html</loc>
+  </url>
+  <url>
+    <loc>https://dmurdoch.github.io/patchDVI/reference/html_with_concordance.html</loc>
   </url>
   <url>
     <loc>https://dmurdoch.github.io/patchDVI/reference/index.html</loc>
@@ -40,6 +52,12 @@
     <loc>https://dmurdoch.github.io/patchDVI/reference/patchLog.html</loc>
   </url>
   <url>
+    <loc>https://dmurdoch.github.io/patchDVI/reference/processConcordance.html</loc>
+  </url>
+  <url>
     <loc>https://dmurdoch.github.io/patchDVI/reference/readDVI.html</loc>
+  </url>
+  <url>
+    <loc>https://dmurdoch.github.io/patchDVI/reference/renderPDF.html</loc>
   </url>
 </urlset>

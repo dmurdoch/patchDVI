@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">patchDVI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.10.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.11.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,13 +18,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/patchDVI.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/dmurdoch/patchDVI/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -52,7 +61,7 @@
         <dd>Get and set DVI specials</dd>
       </dl><dl><dt>
           
-          <code><a href="SweaveAll.html">SweaveAll()</a></code> <code><a href="SweaveAll.html">knitAll()</a></code> 
+          <code><a href="SweaveAll.html">SweaveAll()</a></code> <code><a href="SweaveAll.html">knitAll()</a></code> <code><a href="SweaveAll.html">renderAll()</a></code> 
         </dt>
         <dd>Apply Sweave to a collection of files.</dd>
       </dl><dl><dt>
@@ -65,6 +74,16 @@
           <code><a href="defSconcordance.html">defSconcordance()</a></code> <code><a href="defSconcordance.html">useknitr()</a></code> 
         </dt>
         <dd>Support for non-Sweave concordances.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="html_commonmark_document.html">html_documentC()</a></code> <code><a href="html_commonmark_document.html">html_vignetteC()</a></code> <code><a href="html_commonmark_document.html">pdf_documentC()</a></code> 
+        </dt>
+        <dd>R Markdown drivers to add concordance</dd>
+      </dl><dl><dt>
+          
+          <code><a href="html_with_concordance.html">html_with_concordance()</a></code> <code><a href="html_with_concordance.html">pdf_with_concordance()</a></code> 
+        </dt>
+        <dd>Convert an R Markdown driver to one that handles concordances.</dd>
       </dl><dl><dt>
           
           <code><a href="knitInRStudio.html">knitInRStudio()</a></code> 
@@ -92,9 +111,20 @@
         <dd>Patch a LaTeX log file.</dd>
       </dl><dl><dt>
           
+          <code><a href="processConcordance.html">processConcordance()</a></code> 
+        </dt>
+        <dd>Get the concordance from the datapos values and record it in
+a file.</dd>
+      </dl><dl><dt>
+          
           <code><a href="readDVI.html">readDVI()</a></code> 
         </dt>
         <dd>Demo function to read a .dvi file</dd>
+      </dl><dl><dt>
+          
+          <code><a href="renderPDF.html">renderMiktex()</a></code> <code><a href="renderPDF.html">renderPDFMiktex()</a></code> <code><a href="renderPDF.html">renderDVI()</a></code> <code><a href="renderPDF.html">renderPDF()</a></code> <code><a href="renderPDF.html">renderDVIPDFM()</a></code> 
+        </dt>
+        <dd>Simple functions to render a Markdown file and run it through LaTeX</dd>
       </dl></div>
   </main></div>
 
