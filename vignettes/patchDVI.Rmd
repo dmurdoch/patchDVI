@@ -2,14 +2,16 @@
 title: "The patchDVI package"
 author: "Duncan Murdoch"
 date: "`r Sys.Date()`"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
-    number_sections: true
+  patchDVI::pdf_documentC:
+    toc: true
 vignette: >
+  % !TEX program = Markdown
   %\VignetteIndexEntry{The patchDVI package}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: patchDVI.bib
 ---
 
@@ -141,7 +143,7 @@ can contain a command line to run a `.pdf` or `.dvi` previewer
 should be one that can handle Synctex links; unfortunately, Acrobat
 Reader and MacOS Preview are both deficient in this area. On
 Windows, `SumatraPDF` works, as do the built-in previewers
-in TeXShop and TeXWorks on MacOS X and other platforms.
+in TeXShop and TeXworks on MacOS X and other platforms.
 
 MikTeX includes the `yap`
 previewer for `.dvi` files; the `knitMiktex` command sets it
@@ -150,8 +152,8 @@ as the default.
 Another way to proceed is directly from within your text editor.  The
 instructions here depend on your editor; I have included a few in the
 Appendices: TeXShop in [Using `patchDVI` with TeXShop](#using-patchdvi-with-texshop), WinEdt in
-[Using `patchDVI` with WinEdt](#using-patchdvi-with-winedt), and TeXWorks in 
-[Using `patchDVI` with TeXWorks](#using-patchDVI-with-texworks). Some editors (e.g. TeXShop and TeXWorks)
+[Using `patchDVI` with WinEdt](#using-patchdvi-with-winedt), and TeXworks in 
+[Using `patchDVI` with TeXworks](#using-patchDVI-with-texworks). Some editors (e.g. TeXShop and TeXworks)
 include a previewer that can handle the source links.
 
 Finally, you may want to run knitr from the command line, outside of R.  This line (or the obvious variants
@@ -259,8 +261,8 @@ in R much more flexible, and in version 1.7 of
 `patchDVI` I included a modified version of it with the hope that
 `patchDVI` should be more nearly platform neutral.
 
-The 1.7 release was motivated by an attempt to support TeXWorks [@Kew10], a
-cross-platform LaTeX targetted editor.  TeXWorks was still in its early
+The 1.7 release was motivated by an attempt to support TeXworks [@Kew10], a
+cross-platform LaTeX targetted editor.  TeXworks was still in its early
 days (I was working with version 0.2 on Windows), and it did not have
 enough flexibility to handle large knitr/Sweave projects, where for example, each
 chapter of a book requires separate knitr/Sweave processing, but LaTeX processes
@@ -651,19 +653,19 @@ somewhere near the start of your document.
 The TeXShop previewer supports SyncTeX; you right click in the preview, and choose Sync from the menu
 to jump to your source location.
 
-## Using `patchDVI` with TeXWorks
+## Using `patchDVI` with TeXworks
 
-TeXWorks is an editor for multiple platforms,
+TeXworks is an editor for multiple platforms,
 somewhat similar to TeXShop.  These instructions
 have been tested in version 0.4.5, with MikTeX 2.9 on Windows,
 and version 0.6.2 from MacTeX on MacOS.
 
-NB:  Some versions of TeXWorks had a bug in setting the `HOME` directory
+NB:  Some versions of TeXworks had a bug in setting the `HOME` directory
 of the user.  With those versions, R will not find a locally installed
 copy of `patchDVI`.  To work around the bug, set the `R_USER`
 environment variable to your Windows home directory, e.g. `R_USER=C:/Users/Murdoch`.
 
-TeXWorks can work with the `patchDVI`
+TeXworks can work with the `patchDVI`
 project management features using a script
 to tell it to process the current file through knitr/Sweave, but preview
 the main file.  See the instructions below for my current best attempt at such
@@ -679,16 +681,15 @@ add two arguments, one per line:
    a. `-e`
    b. `patchDVI::SweavePDF('$fullname')`
 2. Install the `patchDVI` package into R.
-3. Tell TeXWorks to open Sweave files by editing the file pattern configuration file `texworks-config.txt`.
-This file is in the `configuration` folder of the TeXWorks home directory.  For example, I have this
-line in my file:
+3. Tell TeXworks to open Sweave files by editing the file pattern configuration file `texworks-config.txt`.  This file
+is found via the `Help | Settings and Resources... | Resources` menu entry.  I have this line there:
 ```
-file-open-filter:	Sweave and TeX documents (*.Rnw *.tex)
+file-open-filter:	TeX documents (*.Rnw *.Rmd *.tex)
 ```
-4. When editing a `.Rnw` file in TeXWorks, choose the `SweavePDF` engine from the menu.
+4. When editing a `.Rnw` file in TeXworks, choose the `SweavePDF` engine from the menu.
 5. Add the `\SweaveOpts{concordance=TRUE}` line to your document.
 6. If you are using the project management features of `patchDVI` and are
-editing a subordinate file, TeXWorks will not open or update the PDF preview after it processes changes.
+editing a subordinate file, TeXworks will not open or update the PDF preview after it processes changes.
 There are four workarounds for this.
 
 The simplest is to manually open the `.pdf` file the first time.  After that it will be updated
@@ -702,7 +703,7 @@ The next simplest is the TeXShop approach:  include a line
 near the top of the file, and make sure that `Main.Rnw` refers
 to all subordinate Sweave files.
 
-To use TeXWorks with knitr, the instructions are very similar to those above, but with two changes.
+To use TeXworks with knitr, the instructions are very similar to those above, but with two changes.
 
 In step 1, replace the second line of the command (the `SweavePDF()` call) with the following longer command, all on one line:
 ```
@@ -717,11 +718,11 @@ into your file:
  @
 ```
 
-To use TeXWorks with R Markdown, make these changes:
+To use TeXworks with R Markdown, make these changes:
 
 In step 1, replace the second line of the command (the `SweavePDF()` call) with the following:
 ```
-patchDVI::renderPDF('$fullname', envir = globalenv())
+patchDVI::renderPDF('$fullname', envir = globalenv(), output_format = "patchDVI::pdf_documentC")
 ```
 
 
@@ -766,7 +767,7 @@ knitr.  It is probably possible to do something similar for Sweave;
 I just haven't tried.
 
 You need to set up your individual chapter files as for
-TeXShop/TeXWorks, i.e. with a
+TeXShop/TeXworks, i.e. with a
 ```
 %!TEX root = Main.Rnw
 ```
@@ -776,7 +777,7 @@ work if you use the knitr style
 ```
 %!RNW root = Main.Rnw
 ```
-but then your files won't work in TeXShop/TeXWorks.)
+but then your files won't work in TeXShop/TeXworks.)
 
 In the main file, you need a code chunk containing
 a line to set the `.SweaveFiles` variable naming
