@@ -69,7 +69,7 @@
                         <h4 data-toc-skip class="author">Duncan
 Murdoch</h4>
             
-            <h4 data-toc-skip class="date">2022-12-02</h4>
+            <h4 data-toc-skip class="date">2022-12-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dmurdoch/patchDVI/blob/HEAD/vignettes/patchDVI.Rmd" class="external-link"><code>vignettes/patchDVI.Rmd</code></a></small>
       <div class="d-none name"><code>patchDVI.Rmd</code></div>
@@ -142,7 +142,7 @@ release is on CRAN and can be installed using</p>
 <p>Source code is maintained on Github and the latest development
 version can be installed using</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmurdoch/patchDVI"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmurdoch/patchDVI"</span><span class="op">)</span></span></code></pre></div>
 <p>With <code>.Rnw</code> files for knitr or Sweave, the document also
 needs to have an option set to produce the “concordances” (links between
 the <code>.Rnw</code> source and the <code>.tex</code> output of
@@ -182,7 +182,7 @@ which can contain a command line to run a <code>.pdf</code> or
 <code>%s</code>). The <code>.pdf</code> previewer should be one that can
 handle Synctex links; unfortunately, Acrobat Reader and MacOS Preview
 are both deficient in this area. On Windows, <code>SumatraPDF</code>
-works, as do the built-in previewers in TeXShop and TeXWorks on MacOS X
+works, as do the built-in previewers in TeXShop and TeXworks on MacOS X
 and other platforms.</p>
 <p>MikTeX includes the <code>yap</code> previewer for <code>.dvi</code>
 files; the <code>knitMiktex</code> command sets it as the default.</p>
@@ -190,8 +190,8 @@ files; the <code>knitMiktex</code> command sets it as the default.</p>
 instructions here depend on your editor; I have included a few in the
 Appendices: TeXShop in <a href="#using-patchdvi-with-texshop">Using
 <code>patchDVI</code> with TeXShop</a>, WinEdt in <a href="#using-patchdvi-with-winedt">Using <code>patchDVI</code> with
-WinEdt</a>, and TeXWorks in <a href="#using-patchDVI-with-texworks">Using <code>patchDVI</code> with
-TeXWorks</a>. Some editors (e.g. TeXShop and TeXWorks) include a
+WinEdt</a>, and TeXworks in <a href="#using-patchDVI-with-texworks">Using <code>patchDVI</code> with
+TeXworks</a>. Some editors (e.g. TeXShop and TeXworks) include a
 previewer that can handle the source links.</p>
 <p>Finally, you may want to run knitr from the command line, outside of
 R. This line (or the obvious variants with replacements for
@@ -212,9 +212,9 @@ another language.</p>
 <p>To use <code>patchDVI</code> with R Markdown, you will currently need
 several unreleased packages. These may be installed using</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmurdoch/backports"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmurdoch/knitr"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmurdoch/patchDVI"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmurdoch/backports"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmurdoch/knitr"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmurdoch/patchDVI"</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>backports</code> package supplies some functions from R
 which are not available in pre-4.3.0 versions. The <code>knitr</code>
 package has small changes to enable concordance output for R Markdown
@@ -288,8 +288,8 @@ adding. This never happened, but in the meantime, Brian Ripley made the
 version 1.7 of <code>patchDVI</code> I included a modified version of it
 with the hope that <code>patchDVI</code> should be more nearly platform
 neutral.</p>
-<p>The 1.7 release was motivated by an attempt to support TeXWorks <span class="citation">(Kew 2008)</span>, a cross-platform LaTeX targetted
-editor. TeXWorks was still in its early days (I was working with version
+<p>The 1.7 release was motivated by an attempt to support TeXworks <span class="citation">(Kew 2008)</span>, a cross-platform LaTeX targetted
+editor. TeXworks was still in its early days (I was working with version
 0.2 on Windows), and it did not have enough flexibility to handle large
 knitr/Sweave projects, where for example, each chapter of a book
 requires separate knitr/Sweave processing, but LaTeX processes only a
@@ -785,17 +785,17 @@ preview, and choose Sync from the menu to jump to your source
 location.</p>
 </div>
 <div class="section level3">
-<h3 id="using-patchdvi-with-texworks">Using <code>patchDVI</code> with TeXWorks<a class="anchor" aria-label="anchor" href="#using-patchdvi-with-texworks"></a>
+<h3 id="using-patchdvi-with-texworks">Using <code>patchDVI</code> with TeXworks<a class="anchor" aria-label="anchor" href="#using-patchdvi-with-texworks"></a>
 </h3>
-<p>TeXWorks is an editor for multiple platforms, somewhat similar to
+<p>TeXworks is an editor for multiple platforms, somewhat similar to
 TeXShop. These instructions have been tested in version 0.4.5, with
 MikTeX 2.9 on Windows, and version 0.6.2 from MacTeX on MacOS.</p>
-<p>NB: Some versions of TeXWorks had a bug in setting the
+<p>NB: Some versions of TeXworks had a bug in setting the
 <code>HOME</code> directory of the user. With those versions, R will not
 find a locally installed copy of <code>patchDVI</code>. To work around
 the bug, set the <code>R_USER</code> environment variable to your
 Windows home directory, e.g. <code>R_USER=C:/Users/Murdoch</code>.</p>
-<p>TeXWorks can work with the <code>patchDVI</code> project management
+<p>TeXworks can work with the <code>patchDVI</code> project management
 features using a script to tell it to process the current file through
 knitr/Sweave, but preview the main file. See the instructions below for
 my current best attempt at such a script. It can also use the TeXShop
@@ -815,19 +815,19 @@ two arguments, one per line:
 </ol>
 </li>
 <li>Install the <code>patchDVI</code> package into R.</li>
-<li>Tell TeXWorks to open Sweave files by editing the file pattern
-configuration file <code>texworks-config.txt</code>. This file is in the
-<code>configuration</code> folder of the TeXWorks home directory. For
-example, I have this line in my file:</li>
+<li>Tell TeXworks to open Sweave files by editing the file pattern
+configuration file <code>texworks-config.txt</code>. This file is found
+via the <code>Help | Settings and Resources... | Resources</code> menu
+entry. I have this line there:</li>
 </ol>
-<pre><code>file-open-filter:   Sweave and TeX documents (*.Rnw *.tex)</code></pre>
+<pre><code>file-open-filter:   TeX documents (*.Rnw *.Rmd *.tex)</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li>When editing a <code>.Rnw</code> file in TeXWorks, choose the
+<li>When editing a <code>.Rnw</code> file in TeXworks, choose the
 <code>SweavePDF</code> engine from the menu.</li>
 <li>Add the <code>\SweaveOpts{concordance=TRUE}</code> line to your
 document.</li>
 <li>If you are using the project management features of
-<code>patchDVI</code> and are editing a subordinate file, TeXWorks will
+<code>patchDVI</code> and are editing a subordinate file, TeXworks will
 not open or update the PDF preview after it processes changes. There are
 four workarounds for this.</li>
 </ol>
@@ -840,7 +840,7 @@ subordinate file.</p>
 <pre><code>%!TEX root = Main.Rnw</code></pre>
 <p>near the top of the file, and make sure that <code>Main.Rnw</code>
 refers to all subordinate Sweave files.</p>
-<p>To use TeXWorks with knitr, the instructions are very similar to
+<p>To use TeXworks with knitr, the instructions are very similar to
 those above, but with two changes.</p>
 <p>In step 1, replace the second line of the command (the
 <code><a href="../reference/SweaveMiktex.html">SweavePDF()</a></code> call) with the following longer command, all on
@@ -850,10 +850,10 @@ one line:</p>
 <pre><code> &lt;&lt;results='asis'&gt;&gt;=
  patchDVI::useknitr()
  @</code></pre>
-<p>To use TeXWorks with R Markdown, make these changes:</p>
+<p>To use TeXworks with R Markdown, make these changes:</p>
 <p>In step 1, replace the second line of the command (the
 <code><a href="../reference/SweaveMiktex.html">SweavePDF()</a></code> call) with the following:</p>
-<pre><code><span><span class="fu">patchDVI</span><span class="fu">::</span><span class="fu"><a href="../reference/renderPDF.html">renderPDF</a></span><span class="op">(</span><span class="st">'$fullname'</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">globalenv</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="fu">patchDVI</span><span class="fu">::</span><span class="fu"><a href="../reference/renderPDF.html">renderPDF</a></span><span class="op">(</span><span class="st">'$fullname'</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">globalenv</a></span><span class="op">(</span><span class="op">)</span>, output_format <span class="op">=</span> <span class="st">"patchDVI::pdf_documentC"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-patchdvi-with-winedt">Using <code>patchDVI</code> with WinEdt<a class="anchor" aria-label="anchor" href="#using-patchdvi-with-winedt"></a>
@@ -898,13 +898,13 @@ customized processing of a file, so these instructions were worked out
 assuming that you already have it configured for knitr. It is probably
 possible to do something similar for Sweave; I just haven’t tried.</p>
 <p>You need to set up your individual chapter files as for
-TeXShop/TeXWorks, i.e. with a</p>
+TeXShop/TeXworks, i.e. with a</p>
 <pre><code>%!TEX root = Main.Rnw</code></pre>
 <p>comment at the top of each. This tells RStudio to run knitr on the
 main file when you click Compile PDF. (It will also work if you use the
 knitr style</p>
 <pre><code>%!RNW root = Main.Rnw</code></pre>
-<p>but then your files won’t work in TeXShop/TeXWorks.)</p>
+<p>but then your files won’t work in TeXShop/TeXworks.)</p>
 <p>In the main file, you need a code chunk containing a line to set the
 <code>.SweaveFiles</code> variable naming all chapter files (but not the
 main file), and then running <code><a href="../reference/knitInRStudio.html">knitInRStudio()</a></code>:</p>
