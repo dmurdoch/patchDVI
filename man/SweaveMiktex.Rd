@@ -4,7 +4,7 @@
 \alias{SweaveDVI}
 \alias{SweavePDF}
 \alias{SweaveDVIPDFM}
-\title{Simple function to run MikTeX}
+\title{Run Sweave and Patch}
 \description{
 This is a simple script to run Sweave, then convert the LaTeX file,
 then patch it.

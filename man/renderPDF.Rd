@@ -4,7 +4,7 @@
 \alias{renderDVI}
 \alias{renderPDF}
 \alias{renderDVIPDFM}
-\title{Simple functions to render a Markdown file and run it through LaTeX}
+\title{Render R Markdown and Patch}
 \description{
 These are simple scripts to render, then run LaTeX, then patch.
 }
