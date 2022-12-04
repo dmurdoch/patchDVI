@@ -33,9 +33,11 @@ You can install the development version of `patchDVI` from
 # install.packages("devtools")
 devtools::install_github("dmurdoch/backports")
 devtools::install_github("dmurdoch/knitr")
-devtools::install_github("dmurdoch/patchDVI@RmdConcord")
+devtools::install_github("dmurdoch/patchDVI")
 ```
 
 ## Usage
 
-See the `patchDVI` vignette for usage details and history.
+See the [`patchDVI`
+vignette](https://dmurdoch.github.io/patchDVI/articles/patchDVI.html)
+for usage details and history.
