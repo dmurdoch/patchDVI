@@ -202,6 +202,14 @@ necessary patching.  Almost all options in the original drivers
 are supported in these replacements, plus a few more.  See the
 help pages for details.
 
+One possible snag is that R Markdown conversions rely on Pandoc.
+If you are processing your document from within RStudio, RStudio will
+make sure that Pandoc is found, but if you are working in another
+environment, it will be up to you to make sure R can find it. One
+way to do this is to add the Pandoc directory to your `PATH`;
+another is to make a link to Pandoc from a directory that is already 
+on your `PATH`. 
+
 It is also possible to use analogs of the 
 `SweavePDF`/`knitPDF` family of
 functions; the ones intended for Markdown source are
