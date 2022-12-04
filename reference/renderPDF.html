@@ -52,59 +52,22 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">renderMiktex</span><span class="op">(</span><span class="va">Rmd</span>, <span class="va">main</span>,</span>
-<span>    cmd <span class="op">=</span> <span class="st">"texify"</span>,</span>
-<span>    options <span class="op">=</span> <span class="st">"--tex-option=-src-specials --tex-option=-interaction=nonstopmode"</span>,</span>
-<span>    includedir <span class="op">=</span> <span class="st">"--tex-option=--include-directory="</span>,</span>
-<span>    stylepath <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    source.code <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    make <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    preview <span class="op">=</span> <span class="st">'yap "%s"'</span>,</span>
-<span>    patchLog<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span>    sleep <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    weave <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span>,</span>
 <span>    <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">renderPDFMiktex</span><span class="op">(</span><span class="va">Rmd</span>, <span class="va">main</span>,</span>
-<span>    cmd <span class="op">=</span> <span class="st">"texify --pdf"</span>,</span>
-<span>    options <span class="op">=</span> <span class="st">"--tex-option=-synctex=-1 --tex-option=-interaction=nonstopmode"</span>,</span>
-<span>    includedir <span class="op">=</span> <span class="st">"--tex-option=-include-directory="</span>,</span>
-<span>    stylepath <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    source.code <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    make <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    preview <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    patchLog <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    sleep <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>    weave <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span>,</span>
 <span>    <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">renderDVI</span><span class="op">(</span><span class="va">Rmd</span>, <span class="va">main</span>,</span>
-<span>    texinputs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    source.code <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    make <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    links <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    preview <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    patchLog <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    weave <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span>,</span>
 <span>    <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">renderPDF</span><span class="op">(</span><span class="va">Rmd</span>, <span class="va">main</span>,</span>
-<span>    texinputs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    source.code <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    make <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    links <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    preview <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    patchLog <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    weave <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span>,</span>
 <span>    <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">renderDVIPDFM</span><span class="op">(</span><span class="va">Rmd</span>, <span class="va">main</span>,</span>
-<span>    latex <span class="op">=</span> <span class="st">"latex"</span>, latexOpts <span class="op">=</span> <span class="st">"-synctex=1 -interaction=nonstopmode"</span>,</span>
-<span>    dvipdfm <span class="op">=</span> <span class="st">"dvipdfm"</span>, dvipdfmOpts <span class="op">=</span> <span class="st">""</span>,</span>
-<span>    texinputs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    source.code <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    make <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    preview <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    patchLog <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    weave <span class="op">=</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span>,</span>
 <span>    <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -117,72 +80,19 @@
   <dt>main</dt>
 <dd><p>The .tex file on which to run latex, defaulting to the output file from Sweave</p></dd>
 
-  <dt>cmd</dt>
-<dd><p>The LaTeX command to run</p></dd>
-
-  <dt>options</dt>
-<dd><p>Options to pass to LaTeX</p></dd>
-
-  <dt>includedir</dt>
-<dd><p>The prefix for an option to give the location of Sweave.sty</p></dd>
-
-  <dt>stylepath</dt>
-<dd><p><code>stylepath</code> argument to pass to <code><a href="https://rdrr.io/r/utils/Sweave.html" class="external-link">Sweave</a></code></p></dd>
-
-  <dt>source.code</dt>
-<dd><p>If not <code>NULL</code>, a filename to source before running <code><a href="https://rdrr.io/r/utils/Sweave.html" class="external-link">Sweave</a></code></p></dd>
-
-  <dt>make</dt>
-<dd><p>Value to pass to <code><a href="SweaveAll.html">SweaveAll</a></code> to control which Sweave files are processed</p></dd>
-
-  <dt>preview</dt>
-<dd><p>Command to use to preview result, or <code>NULL</code> for no preview</p></dd>
-
-  <dt>patchLog</dt>
-<dd><p>Whether to attempt to patch the console log and <code class="file">.log</code> file</p></dd>
-
-  <dt>sleep</dt>
-<dd><p>Number of seconds to sleep if an error is detected in the run</p></dd>
-
-  <dt>texinputs</dt>
-<dd><p>Extra paths to pass to <code><a href="https://rdrr.io/r/tools/texi2dvi.html" class="external-link">texi2dvi</a></code></p></dd>
-
-  <dt>links</dt>
-<dd><p>If not <code>NULL</code>, an option to turn on production of source links
-      via Synctex or source specials</p></dd>
-
-  <dt>latex,latexOpts</dt>
-<dd><p>The function to call to convert the <code class="file">.tex</code> to <code class="file">.dvi</code>,
-      and options to put on the command line.</p></dd>
-
-  <dt>dvipdfm, dvipdfmOpts</dt>
-<dd><p>The function to call to convert the <code class="file">.dvi</code> to <code class="file">.pdf</code>,
-      and options to put on the command line.</p></dd>
-
   <dt>weave</dt>
 <dd><p>The function to carry out the weaving.</p></dd>
 
   <dt>...</dt>
-<dd><p>Additional options to pass to <code><a href="SweaveAll.html">SweaveAll</a></code></p></dd>
+<dd><p>See Details below.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>If the <code>Rmd</code> argument is a filename ending in <code class="file">.tex</code>, then
+    <p>The <code>...</code> arguments are passed to the corresponding <code><a href="SweaveMiktex.html">Sweave*</a></code> function.</p>
+<p>If the <code>Rmd</code> argument is a filename ending in <code class="file">.tex</code>, then
 knitting is skipped, but the output file is still patched (because
 one of the other files in the project might have come from R Markdown).</p>
-<p>The <code>source.code</code> argument may be used to temporarily install code before
-running the document through the weaver (e.g. <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></code>).
-It could install
-an experimental version of <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></code>, or set up some variables
-to be used by other code chunks, etc.</p>
-<p>The functions invoke Latex differently.  <code>renderMiktex</code> is designed
-to call Miktex's <code>texify</code> command to produce a <code class="file">.dvi</code> file.  <code>renderPDFMiktex</code>
-does the same, but produces a <code class="file">.pdf</code>.  <code>renderDVI</code> and <code>renderPDF</code>
-are similar, but use a modified version of <span style="R">R</span>'s <code><a href="https://rdrr.io/r/tools/texi2dvi.html" class="external-link">texi2dvi</a></code>
-function to invoke Latex. <code>renderDVIPDFM</code> does the conversion to
-<code class="file">.pdf</code> in two stages.</p>
-<p>The <code>patchLog</code> option makes use of the <code><a href="patchLog.html">patchLog</a></code> function.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
