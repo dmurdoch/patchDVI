@@ -4,66 +4,66 @@
 \alias{knitDVI}
 \alias{knitPDF}
 \alias{knitDVIPDFM}
-\title{Simple functions to knit a file and run it through LaTeX}
+\title{Knit a File and Patch}
 \description{
-This is a simple script to run knit, then LaTeX, then patchDVI. 
+This is a simple script to run knit, then LaTeX, then patchDVI.
 }
 \usage{
 
-knitMiktex(Rnw, main, 
+knitMiktex(Rnw, main,
     cmd = "texify",
     options = "--tex-option=-src-specials --tex-option=-interaction=nonstopmode",
     includedir = "--tex-option=--include-directory=",
-    stylepath = FALSE, 
-    source.code = NULL, 
-    make = 1, 
-    preview = 'yap "\%s"', 
+    stylepath = FALSE,
+    source.code = NULL,
+    make = 1,
+    preview = 'yap "\%s"',
     patchLog=TRUE,
-    sleep = 0, 
-    weave = knitr::knit,
-    ...)
-		  
-knitPDFMiktex(Rnw, main,  
-    cmd = "texify --pdf", 
-    options = "--tex-option=-synctex=-1 --tex-option=-interaction=nonstopmode",
-    includedir = "--tex-option=-include-directory=",
-    stylepath = FALSE, 
-    source.code = NULL, 
-    make = 1, 
-    preview = NULL, 
-    patchLog = TRUE, 
-    sleep = 0, 
-    weave = knitr::knit,
-    ...)
-		  
-knitDVI(Rnw, main, 
-    texinputs = NULL, 
-    source.code = NULL, 
-    make = 1, 
-    links = NULL,
-    preview = NULL, 
-    patchLog = TRUE, 
+    sleep = 0,
     weave = knitr::knit,
     ...)
 
-knitPDF(Rnw, main, 
-    texinputs = NULL, 
-    source.code = NULL, 
-    make = 1, 
-    links = NULL,
-    preview = NULL, 
-    patchLog = TRUE, 
-    weave = knitr::knit, 
+knitPDFMiktex(Rnw, main,
+    cmd = "texify --pdf",
+    options = "--tex-option=-synctex=-1 --tex-option=-interaction=nonstopmode",
+    includedir = "--tex-option=-include-directory=",
+    stylepath = FALSE,
+    source.code = NULL,
+    make = 1,
+    preview = NULL,
+    patchLog = TRUE,
+    sleep = 0,
+    weave = knitr::knit,
     ...)
-	  
-knitDVIPDFM(Rnw, main, 
-    latex = "latex", latexOpts = "-synctex=1 -interaction=nonstopmode", 
-    dvipdfm = "dvipdfm", dvipdfmOpts = "", 
-    texinputs = NULL, 
-    source.code = NULL, 
-    make = 1, 
-    preview = NULL, 
-    patchLog = TRUE, 
+
+knitDVI(Rnw, main,
+    texinputs = NULL,
+    source.code = NULL,
+    make = 1,
+    links = NULL,
+    preview = NULL,
+    patchLog = TRUE,
+    weave = knitr::knit,
+    ...)
+
+knitPDF(Rnw, main,
+    texinputs = NULL,
+    source.code = NULL,
+    make = 1,
+    links = NULL,
+    preview = NULL,
+    patchLog = TRUE,
+    weave = knitr::knit,
+    ...)
+
+knitDVIPDFM(Rnw, main,
+    latex = "latex", latexOpts = "-synctex=1 -interaction=nonstopmode",
+    dvipdfm = "dvipdfm", dvipdfmOpts = "",
+    texinputs = NULL,
+    source.code = NULL,
+    make = 1,
+    preview = NULL,
+    patchLog = TRUE,
     weave = knitr::knit,
     ...)
 }
@@ -90,21 +90,21 @@ knitDVIPDFM(Rnw, main,
   \item{...}{ Additional options to pass to \code{\link{SweaveAll}} }
 }
 \details{
-If the \code{Rnw} argument is a filename ending in \file{.tex}, then 
+If the \code{Rnw} argument is a filename ending in \file{.tex}, then
 knitting is skipped, but the output file is still patched (because
 one of the other files in the project might have come from knitr).
 
 The \code{source.code} argument may be used to temporarily install code before
-running the document through the weaver (e.g. \code{\link[knitr]{knit}}).  
+running the document through the weaver (e.g. \code{\link[knitr]{knit}}).
 It could install
-an experimental version of \code{\link[knitr]{knit}}, or set up some variables 
+an experimental version of \code{\link[knitr]{knit}}, or set up some variables
 to be used by other code chunks, etc.
 
 The functions invoke Latex differently.  \code{knitMiktex} is designed
 to call Miktex's \code{texify} command to produce a \file{.dvi} file.  \code{knitPDFMiktex}
 does the same, but produces a \file{.pdf}.  \code{knitDVI} and \code{knitPDF}
-are similar, but use a modified version of \R{}'s \code{\link[tools]{texi2dvi}} 
-function to invoke Latex. \code{knitDVIPDFM} does the conversion to 
+are similar, but use a modified version of \R{}'s \code{\link[tools]{texi2dvi}}
+function to invoke Latex. \code{knitDVIPDFM} does the conversion to
 \file{.pdf} in two stages.
 
 The \code{patchLog} option makes use of the \code{\link{patchLog}} function.
