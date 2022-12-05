@@ -6,9 +6,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of patchDVI is to support previewer forward and reverse search
-between Sweave, knitr or R Markdown source and .dvi, .pdf or .html
-output.
+The main goal of patchDVI is to support previewer forward and reverse
+search between Sweave, knitr or R Markdown source and .dvi, .pdf or
+.html output.
+
+It also contains project management functions, to make it more
+convenient to build large documents from multiple source files, and
+supports editing of Sweave, knitr or R Markdown source in
+[TeXworks](https://tug.org/texworks/),
+[TeXShop](https://pages.uoregon.edu/koch/texshop/) and other editors.
 
 This project was originally hosted on R-forge; see
 
