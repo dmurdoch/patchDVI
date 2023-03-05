@@ -9,12 +9,11 @@ export(readDVI, DVIspecials, setDVIspecials, patchDVI, SweaveMiktex,
        renderAll,
        needsPackages)
 
-export(processConcordance,
-       html_documentC,
+export(html_documentC,
        html_vignetteC,
-       html_with_concordance,
        pdf_documentC,
-       pdf_with_concordance)
+       pdf_with_patches,
+       html_with_concordance)
 
 useDynLib(patchDVI, .registration = TRUE, .fixes = "C_")
 
@@ -22,4 +21,11 @@ importFrom(tools, sans_ext = file_path_sans_ext)
 importFrom(utils, Sweave, Stangle, file_test,
                   install.packages, update.packages)
 importFrom(tools, vignetteEngine)
+importFrom(RmdConcord,
+           html_documentC,
+           html_vignetteC,
+           html_with_concordance,
+           pdf_documentC0,
+           pdf_with_concordance,
+           processLatexConcordance)
 

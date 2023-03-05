@@ -9,7 +9,7 @@ Description: Functions to patch specials in '.dvi' files,
         in Sweave, knitr or R Markdown to link sources to previews.
 License: GPL-2
 Depends: R (>= 3.3.0)
-Imports: utils, tools
+Imports: utils, tools, RmdConcord
 Suggests: knitr, rmarkdown, backports
 SystemRequirements: The 'Japanese.Rnw' vignette requires uplatex and dvipdfmx.
 VignetteBuilder:  knitr, rmarkdown, patchDVI
