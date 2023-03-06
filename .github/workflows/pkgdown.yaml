@@ -29,6 +29,9 @@ jobs:
         with:
           use-public-rspm: true
 
+      - run: remotes::install_local(".", dep = TRUE)
+        shell: Rscript {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::., any::RmdConcord
