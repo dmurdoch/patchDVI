@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 The `patchDVI` package works with Sweave [@Leisch02],  knitr [@Xie2013] and R Markdown [@Xie2022]
 and document previewers to facilitate editing:  it modifies the links
-that LaTeX puts into the output so that they refer to the original
+that are put into the output so that they refer to the original
 source.  It also includes a few project management functions to
 make large multi-file documents easier to handle, and
 can include source links ("concordances") in HTML output from
@@ -58,7 +58,7 @@ I wrote the `patchDVI` package to address this problem.  It works as
 follows.  If the knitr/Sweave file is processed with the option
 `concordance=TRUE`, knitr or Sweave will output a record of the
 concordance between the lines in the input file and the output file.
-When the file is processed by LaTeX, this information is embedded in
+When the file is processed by LaTeX or Pandoc, this information is embedded in
 the output.  (Details of the embedding are described in sections [Concordances](#concordances)
 to [Patching Synctex Files](#patching-.synctex-files) below.)  After
 producing the `.dvi` or `.pdf` file, a `patchDVI`
@@ -95,7 +95,8 @@ install.packages("patchDVI")
 Source code is maintained on Github and the latest development version
 can be installed using
 ```r
-remotes::install_github("dmurdoch/patchDVI")
+remotes::install_github("dmurdoch/patchDVI",
+dependencies = TRUE)
 ```
 
 With `.Rnw` files for knitr or Sweave, the
@@ -176,14 +177,15 @@ language.
 To use `patchDVI` with R Markdown, you will currently need several
 unreleased packages.  These may be installed using
 ```r
-remotes::install_github("dmurdoch/backports")
-remotes::install_github("dmurdoch/knitr")
-remotes::install_github("dmurdoch/patchDVI")
+remotes::install_github("dmurdoch/patchDVI", dependencies = TRUE)
 ```
-The `backports` package supplies some functions from R
-which are not available in pre-4.3.0 versions.  The `knitr` package
-has small changes to enable concordance output for R Markdown
-documents.  Finally, the latest changes to `patchDVI` have not yet made
+which will also install `RmdConcord` and
+`backports` from Github. `RmdConcord` provides
+the R Markdown concordance support; `backports`
+supplies some functions from R
+which are not available in pre-4.3.0
+versions.  Finally, the latest changes to
+`patchDVI` have not yet made
 it to CRAN.
 
 With those versions installed, you then change the `output`
@@ -194,7 +196,7 @@ output: patchDVI::pdf_documentC
 instead.  If it
 was `html_document`, use
 ```
-output patchDVI::html_documentC
+output RmdConcord::html_documentC
 ```
 That should be
 all that is necessary to enable concordances and to carry out the
@@ -219,7 +221,7 @@ functions; the ones intended for Markdown source are
 ## Known limitations of Markdown support
 
 The Markdown support relies on a relatively recent addition to
-Pandoc, the `sourcepos` extension.  At present (Pandoc 2.18
+Pandoc, the `sourcepos` extension.  At present (Pandoc 2.19.2
 as included in RStudio), this extension
 only works with the Commonmark reader, whereas by default, Pandoc
 uses its own dialect of Markdown.  To enable concordances,
@@ -227,7 +229,7 @@ uses its own dialect of Markdown.  To enable concordances,
 
 Unfortunately, the `commonmark_x` reader doesn't support most of
 the extensions that the standard `markdown` reader supports.
-This page:  https://github.com/jgm/pandoc/wiki/Roadmap lists the current status.
+This page:  https://github.com/jgm/pandoc/wiki/Roadmap should list the current status.
 For the definitions of the extensions, see the Pandoc documentation
 at https://pandoc.org/MANUAL.html.
 

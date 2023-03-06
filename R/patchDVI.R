@@ -11,7 +11,8 @@ renderMiktex <- function(Rmd,
                        main,
                        weave = rmarkdown::render,
                        ...) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
   SweaveMiktex(Rnw = Rmd,
              main = main,
              weave = weave,
@@ -73,7 +74,8 @@ knitDVI <- function( Rnw, main,
 renderDVI <- function( Rmd, main,
                      weave = rmarkdown::render,
                      ... ) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
   SweaveDVI( Rnw = Rmd,
              main = main,
              weave = weave,

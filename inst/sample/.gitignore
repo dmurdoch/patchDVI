@@ -1,2 +1,7 @@
-Sample.html
-Sample.md
+*.html
+*.md
+*.aux
+*.tex
+*.log
+*.pdf
+*.synctex

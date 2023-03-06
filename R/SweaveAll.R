@@ -14,7 +14,9 @@ renderAll <- function(RmdFiles = NULL, make = 1, PostKnitHook = NULL,
                       force = TRUE, verbose = FALSE,
                       weave = rmarkdown::render,
                       ...) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
+
   SweaveAll(SweaveFiles = RmdFiles,
             make = make,
             PostSweaveHook = PostKnitHook,
