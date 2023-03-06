@@ -9,7 +9,8 @@ knitPDFMiktex <- function( Rnw, main,
 renderPDFMiktex <- function(Rmd, main,
                            weave = rmarkdown::render,
                            ...) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
   SweavePDFMiktex( Rnw = Rmd,
                  main = main,
                  weave = weave,
@@ -68,7 +69,8 @@ knitPDF <- function( Rnw, main,
 renderPDF <- function( Rmd, main,
                      weave = rmarkdown::render,
                      ...  ) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
   SweavePDF( Rnw = Rmd, main = main,
              weave = weave,
              output_options = list(run_latex = FALSE),
@@ -119,7 +121,8 @@ knitDVIPDFM <- function(Rnw, main,
 renderDVIPDFM <- function(Rmd, main,
                         weave = rmarkdown::render,
                         ... ) {
-  test_rmarkdown()
+  if (!test_packages())
+    return()
   SweaveDVIPDFM(Rnw = Rmd, main=main,
               weave = weave,
               output_options = list(run_latex = FALSE),

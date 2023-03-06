@@ -1,19 +1,20 @@
-test_rmarkdown <- function() {
-  if (!requireNamespace("knitr", quietly = TRUE))
-    stop("RmdConcord requires knitr to process R Markdown")
-  save <- knitr::opts_knit$get(c("concordance", "rmarkdown.pandoc.to"))
-  knitr::opts_knit$set(concordance = TRUE, rmarkdown.pandoc.to = "markdown")
-  on.exit(knitr::opts_knit$set(save))
+test_packages <- function() {
 
-  if (!exists("matchConcordance", where = parent.env(environment())))
-    stop("RmdConcord requires the backports package containing matchConcordance()")
+  if (!requireNamespace("RmdConcord")) {
+    warning("The RmdConcord package is required")
+    return(FALSE)
+  }
+  if (!RmdConcord::test_packages(FALSE))
+    return(FALSE)
 
-  if (!requireNamespace("rmarkdown", quietly = TRUE))
-    stop("patchDVI requires rmarkdown to process R Markdown documents")
+  TRUE
 }
 
 pdf_with_patches <- function(driver) {
-  driver <- pdf_with_concordance(driver)
+
+  if (!test_packages()) return(driver)
+
+  driver <- RmdConcord::pdf_with_concordance(driver)
 
   function(latex_engine = "pdflatex",
            sourcepos = TRUE,
@@ -37,7 +38,7 @@ pdf_with_patches <- function(driver) {
         on.exit(setwd(origdir))
 
         newoutfile <- outfile
-        orig_ext <- res$pandoc$orig_ext
+        orig_ext <- res$pandoc$RmdConcord_ext
         if (run_latex &&
             (length(orig_ext) != 1 || orig_ext != ".tex")) {
           # Run pdflatex or other with Synctex output
@@ -56,8 +57,8 @@ pdf_with_patches <- function(driver) {
 
         # Run the old post-processor, if there was one
 
-        if (is.function(res$orig_post_processor))
-          res <- res$orig_post_processor(yaml, infile, newoutfile, ...)
+        if (is.function(res$RmdConcord_post_processor))
+          res <- res$RmdConcord_post_processor(yaml, infile, newoutfile, ...)
         else
           res <- newoutfile
         res

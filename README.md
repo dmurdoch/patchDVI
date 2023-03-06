@@ -14,30 +14,23 @@ This project was originally hosted on R-forge; see
 
 <https://r-forge.r-project.org/projects/sweavesearch/>
 
-for the older history.
+for older versions.
 
 ## Installation
 
-This version of `patchDVI` makes use of some functions that will be
-released in R 4.3.0. They are available in a development version of the
-`backports` package.
-
-It also requires patches to `knitr` to support concordances in R
-Markdown files. These are also currently in a development version of
-that package.
-
-You can install the development version of `patchDVI` from
-[GitHub](https://github.com/) with:
+This version of `patchDVI` optionally makes use of `RmdConcord`, a
+function to support concordances in R Markdown documents. That package
+is not yet on CRAN, but will be installed automatically on your system
+if you install the development version of `patchDVI`. You can install
+that from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("dmurdoch/backports")
-devtools::install_github("dmurdoch/knitr")
-devtools::install_github("dmurdoch/patchDVI")
+devtools::install_github("dmurdoch/patchDVI", dependencies = TRUE)
 ```
 
 ## Usage
 
 See the [`patchDVI`
 vignette](https://dmurdoch.github.io/patchDVI/articles/patchDVI.html)
-for usage details and history.
+for usage details.
