@@ -29,10 +29,7 @@ jobs:
         with:
           use-public-rspm: true
 
-      - run: install.packages("remotes")
-        shell: Rscript {0}
-
-      - run: remotes::install_local(".", dep = TRUE)
+      - run: install.packages("remotes"); remotes::install_github("dmurdoch/RmdConcord"); remotes::install_local(".", dep = TRUE)
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
