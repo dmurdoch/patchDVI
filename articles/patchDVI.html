@@ -72,7 +72,7 @@
                         <h4 data-toc-skip class="author">Duncan
 Murdoch</h4>
             
-            <h4 data-toc-skip class="date">2023-03-06</h4>
+            <h4 data-toc-skip class="date">2023-03-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dmurdoch/patchDVI/blob/HEAD/vignettes/patchDVI.Rmd" class="external-link"><code>vignettes/patchDVI.Rmd</code></a></small>
       <div class="d-none name"><code>patchDVI.Rmd</code></div>
@@ -215,18 +215,11 @@ file contains a ``YAML header’’ giving configuration information, and
 this is followed by a mix of text in a Markdown dialect and code in R or
 another language.</p>
 <p>To use <code>patchDVI</code> with R Markdown, you will currently need
-several unreleased packages. These may be installed using</p>
+the development version. This may be installed using</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmurdoch/patchDVI"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>which will also install <code>RmdConcord</code> and
-<code>backports</code> from Github. <code>RmdConcord</code> provides the
-R Markdown concordance support; <code>backports</code> supplies some
-functions from R which are not available in pre-4.3.0 versions. Finally,
-the latest changes to <code>patchDVI</code> have not yet made it to
-CRAN.</p>
-<p>With those versions installed, you then change the
-<code>output</code> setting in the YAML. If it was
-<code>pdf_document</code>, use</p>
+<p>With that version installed, you then change the <code>output</code>
+setting in the YAML. If it was <code>pdf_document</code>, use</p>
 <pre><code><span><span class="va">output</span><span class="op">:</span> <span class="fu">patchDVI</span><span class="fu">::</span><span class="va"><a href="../reference/pdf_documentC.html">pdf_documentC</a></span></span></code></pre>
 <p>instead. If it was <code>html_document</code>, use</p>
 <pre><code>output RmdConcord::html_documentC</code></pre>
