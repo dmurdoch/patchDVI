@@ -16,4 +16,3 @@ VignetteBuilder:  knitr, rmarkdown, patchDVI
 Encoding: UTF-8
 URL: https://github.com/dmurdoch/patchDVI
 BugReports: https://github.com/dmurdoch/patchDVI/issues
-Remotes: dmurdoch/RmdConcord

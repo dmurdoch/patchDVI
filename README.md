@@ -25,14 +25,18 @@ for older versions.
 ## Installation
 
 This version of `patchDVI` optionally makes use of `RmdConcord`, a
-function to support concordances in R Markdown documents. That package
-is not yet on CRAN, but will be installed automatically on your system
-if you install the development version of `patchDVI`. You can install
-that from [GitHub](https://github.com/) with:
+package to support concordances in R Markdown documents. You can install
+the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("dmurdoch/patchDVI", dependencies = TRUE)
+```
+
+The CRAN version is installed with
+
+``` r
+install.packages("patchDVI", dependencies = TRUE)
 ```
 
 ## Usage
