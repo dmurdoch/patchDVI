@@ -660,7 +660,7 @@ to jump to your source location.
 TeXworks is an editor for multiple platforms,
 somewhat similar to TeXShop.  These instructions
 have been tested in version 0.4.5, with MikTeX 2.9 on Windows,
-and version 0.6.2 from MacTeX on MacOS.
+and version 0.6.8 on MacOS.
 
 NB:  Some versions of TeXworks had a bug in setting the `HOME` directory
 of the user.  With those versions, R will not find a locally installed
