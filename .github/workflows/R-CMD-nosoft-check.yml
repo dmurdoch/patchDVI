@@ -2,7 +2,7 @@
 
 name: CI with no soft deps
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
 
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
 jobs:
 
   R-CMD-check:
-  
+
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -40,7 +40,7 @@ jobs:
           rtools-version: ${{ matrix.config.rtools-version }}
 
       - uses: r-lib/actions/setup-pandoc@v2
-      
+
       - name: Install automake
         if: runner.os == 'macOS'
         run: |
@@ -72,7 +72,6 @@ jobs:
       - name: Install patchDVI & dependencies
         run: |
           # Be sure to get appropriate CRAN or Github versions
-          remotes::install_github(c("dmurdoch/knitr", "dmurdoch/backports"))
           remotes::install_local(force = TRUE)
         shell: Rscript {0}
 

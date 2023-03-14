@@ -79,7 +79,6 @@ jobs:
       - name: Install patchDVI & dependencies
         run: |
           # Be sure to get appropriate CRAN or Github versions
-          remotes::install_github(c("dmurdoch/knitr", "dmurdoch/backports"))
           remotes::install_local(force = TRUE)
         shell: Rscript {0}
 

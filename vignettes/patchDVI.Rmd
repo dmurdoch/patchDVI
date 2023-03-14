@@ -174,21 +174,13 @@ header'' giving configuration information, and this is followed
 by a mix of text in a Markdown dialect and code in R or another
 language.
 
-To use `patchDVI` with R Markdown, you will currently need several
-unreleased packages.  These may be installed using
+To use `patchDVI` with R Markdown, you will currently need the
+development version.  This may be installed using
 ```r
 remotes::install_github("dmurdoch/patchDVI", dependencies = TRUE)
 ```
-which will also install `RmdConcord` and
-`backports` from Github. `RmdConcord` provides
-the R Markdown concordance support; `backports`
-supplies some functions from R
-which are not available in pre-4.3.0
-versions.  Finally, the latest changes to
-`patchDVI` have not yet made
-it to CRAN.
 
-With those versions installed, you then change the `output`
+With that version installed, you then change the `output`
 setting in the YAML.  If it was `pdf_document`, use
 ```
 output: patchDVI::pdf_documentC
