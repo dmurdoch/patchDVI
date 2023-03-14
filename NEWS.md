@@ -135,6 +135,7 @@ It also has a `verbose = FALSE` argument for debugging.
 # patchDVI 1.11.0
 
 * Added support for R Markdown sources using R Markdown
-output drivers `pdf_documentC()` etc.
+output driver `pdf_documentC()` and the new `RmdConcord`
+package.
 * Moved source to Github, added website
 https://dmurdoch.github.io/patchDVI/ .

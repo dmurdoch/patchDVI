@@ -21,7 +21,4 @@ JSweave <- function(file, ...) {
 
 .onLoad <- function(libname, pkgname) {
   vignetteEngine("JSweave", weave = JSweave, tangle = Stangle)
-  if (requireNamespace("backports", quietly = TRUE))
-    backports::import(pkgname,
-                      c("as.Rconcordance", "matchConcordance"))
 }

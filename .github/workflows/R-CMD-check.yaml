@@ -48,7 +48,6 @@ jobs:
         with:
           extra-packages: |
             any::rcmdcheck
-            any::RmdConcord
 
       - uses: r-lib/actions/check-r-package@v2
         with:
