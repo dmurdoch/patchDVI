@@ -6,7 +6,7 @@ If that argument is TRUE (the default) then concordances
 are handled by the new driver.
 This is used to produce pdf_documentC
 in this package, and should also work on other drivers that produce
-PDF output using Pandoc."><title>Convert an R Markdown pdf driver to one that handles concordances. — pdf_with_patches • patchDVI</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Convert an R Markdown pdf driver to one that handles concordances. — pdf_with_patches"><meta property="og:description" content="This function produces a new driver which matches the old
+PDF output using Pandoc."><title>Convert an R Markdown pdf driver to one that handles concordances. — pdf_with_patches • patchDVI</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Convert an R Markdown pdf driver to one that handles concordances. — pdf_with_patches"><meta property="og:description" content="This function produces a new driver which matches the old
 one in most respects, but adds an argument sourcepos
 (and possibly others).
 If that argument is TRUE (the default) then concordances
@@ -24,7 +24,7 @@ PDF output using Pandoc."><!-- mathjax --><script src="https://cdnjs.cloudflare.
     
     <a class="navbar-brand me-2" href="../index.html">patchDVI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.11.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,44 +109,11 @@ source file.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     force(run_latex)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     res &lt;- driver(latex_engine = latex_engine, sourcepos = sourcepos, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (sourcepos) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         oldpost &lt;- res$post_processor</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         res$post_processor &lt;- function(yaml, infile, outfile, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ...) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             if (is.function(oldpost)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 outfile &lt;- oldpost(yaml, infile, outfile, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             workdir &lt;- dirname(outfile)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             concordanceFile &lt;- paste0(sans_ext(normalizePath(infile)), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "-concordance.tex")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             origdir &lt;- setwd(workdir)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             on.exit(setwd(origdir))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             newoutfile &lt;- outfile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             orig_ext &lt;- res$pandoc$RmdConcord_ext</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             if (run_latex &amp;&amp; (length(orig_ext) != 1 || orig_ext != </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 ".tex")) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 consoleLog &lt;- try(texi2dvi(outfile, pdf = TRUE))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 if (!inherits(consoleLog, "try-error")) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   tempLog &lt;- tempfile(fileext = ".log")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   writeLines(consoleLog, tempLog)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   patchLog(tempLog)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   consoleLog &lt;- readLines(tempLog)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 cat(consoleLog, sep = "\n")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 message(patchSynctex(sub("\\.tex$", ".synctex", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   outfile, ignore.case = TRUE), patchLog = TRUE))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 newoutfile &lt;- paste0(sans_ext(outfile), ".pdf")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             if (is.function(res$RmdConcord_post_processor)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 res &lt;- res$RmdConcord_post_processor(yaml, infile, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   newoutfile, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             else res &lt;- newoutfile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             res</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     res</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     res &lt;- apply_patches(res, sourcepos, defineSconcordance, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         run_latex)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55c2b7d61608&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c2b7d67f48&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5646cca268b0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5646cca25ca8&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
