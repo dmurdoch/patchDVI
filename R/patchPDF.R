@@ -69,8 +69,7 @@ knitPDF <- function( Rnw, main,
 renderPDF <- function( Rmd, main,
                      weave = rmarkdown::render,
                      ...  ) {
-  if (!test_packages())
-    return()
+
   SweavePDF( Rnw = Rmd, main = main,
              weave = weave,
              output_options = list(run_latex = FALSE),

@@ -10,7 +10,8 @@ export(readDVI, DVIspecials, setDVIspecials, patchDVI, SweaveMiktex,
        needsPackages)
 
 export(pdf_documentC,
-       pdf_with_patches)
+       pdf_with_patches,
+       latex_formatC)
 
 useDynLib(patchDVI, .registration = TRUE, .fixes = "C_")
 

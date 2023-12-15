@@ -139,3 +139,7 @@ output driver `pdf_documentC()` and the new `RmdConcord`
 package.
 * Moved source to Github, added website
 https://dmurdoch.github.io/patchDVI/ .
+
+# patchDVI 1.11.1
+
+* Added support for `markdown::latex_format` output.
