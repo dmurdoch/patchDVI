@@ -56,7 +56,7 @@ SEXP dviSpecials(SEXP dvi)
       else {
         memcpy(c, bytes + 1 + parmsize, k);
         SET_STRING_ELT(result, used++, mkChar(c));
-        Free(c);
+        R_Free(c);
       }
     } else if ((int)(*bytes) < 248)
       k = *(bytes + parmsize);

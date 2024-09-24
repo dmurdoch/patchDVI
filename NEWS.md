@@ -140,6 +140,6 @@ package.
 * Moved source to Github, added website
 https://dmurdoch.github.io/patchDVI/ .
 
-# patchDVI 1.11.1
+# patchDVI 1.11.2
 
-* Added support for `markdown::latex_format` output.
+* Modified code to work with strict R headers.
