@@ -75,27 +75,30 @@ apply_patches <- function(res, sourcepos, defineSconcordance, run_latex) {
 
 pdf_documentC <- pdf_with_patches(rmarkdown::pdf_document)
 
-latex_formatC <- function(latex_engine = "pdflatex",
-                          options = list(sourcepos = TRUE),
-                          defineSconcordance = TRUE,
-                          run_latex = TRUE,
-                          ...) {
-  if (!test_packages(pandoc = FALSE))
-    if (requireNamespace("markdown"))
-      return(markdown::latex_format(latex_engine = latex_engine, options = options, ...))
-    else
-      stop("The 'markdown' package is needed")
+# This attempt doesn't work.  We may try again later, so leave
+# the code here.
 
-  force(latex_engine)
-  force(defineSconcordance)
-  force(run_latex)
-
-  sourcepos <- options$sourcepos
-  if (is.null(sourcepos))
-    options$sourcepos <- sourcepos <- NULL
-
-  res <- RmdConcord::latex_formatC0(latex_engine = latex_engine,
-                                    options = options,
-                                    ...)
-  apply_patches(res, sourcepos, defineSconcordance = defineSconcordance, run_latex = run_latex)
-}
+# latex_formatC <- function(latex_engine = "pdflatex",
+#                           options = list(sourcepos = TRUE),
+#                           defineSconcordance = TRUE,
+#                           run_latex = TRUE,
+#                           ...) {
+#   if (!test_packages(pandoc = FALSE))
+#     if (requireNamespace("markdown"))
+#       return(markdown::latex_format(latex_engine = latex_engine, options = options, ...))
+#     else
+#       stop("The 'markdown' package is needed")
+#
+#   force(latex_engine)
+#   force(defineSconcordance)
+#   force(run_latex)
+#
+#   sourcepos <- options$sourcepos
+#   if (is.null(sourcepos))
+#     options$sourcepos <- sourcepos <- NULL
+#
+#   res <- RmdConcord::latex_formatC0(latex_engine = latex_engine,
+#                                     options = options,
+#                                     ...)
+#   apply_patches(res, sourcepos, defineSconcordance = defineSconcordance, run_latex = run_latex)
+# }

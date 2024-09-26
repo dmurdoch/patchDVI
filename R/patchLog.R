@@ -42,8 +42,8 @@ patchLog <- function(f, newname=f, concords = NULL, max_print_line = 79, Cstyle 
                     lines, perl = TRUE)
 
   filestart <- gregexpr(paste0('\\(', fileregexp), lines, perl = TRUE)
-  lineswithfile <- which(sapply(filestart, function(x) length(x) > 1 || x != -1))
-  filestartline <- rep.int(lineswithfile, sapply(filestart[lineswithfile], length))
+  lineswithfile <- which(vapply(filestart, function(x) length(x) > 1 || x != -1, logical(1)))
+  filestartline <- rep.int(lineswithfile, vapply(filestart[lineswithfile], length, integer(1)))
   filestartcol <- unlist(lapply(filestart[lineswithfile], function(x) attr(x, "capture.start")[,2]))
   filenamelen <- unlist(lapply(filestart[lineswithfile], function(x) attr(x, "capture.length")[,2]))
   filename <- substr(lines[filestartline], filestartcol, filestartcol + filenamelen - 1)
@@ -75,16 +75,20 @@ patchLog <- function(f, newname=f, concords = NULL, max_print_line = 79, Cstyle 
   openparen[errortext] <- list(-1)
   closeparen[errortext] <- list(-1)
 
-  lineswithopen <- which(sapply(openparen, function(x) length(x) > 1 || x != -1))
-  lineswithclose <- which(sapply(closeparen, function(x) length(x) > 1 || x != -1))
+  lineswithopen <- which(vapply(openparen, function(x) length(x) > 1 || x != -1, logical(1)))
+  lineswithclose <- which(vapply(closeparen, function(x) length(x) > 1 || x != -1, logical(1)))
 
-  openlines <- rep.int(lineswithopen, sapply(openparen[lineswithopen], length))
-  closelines <- rep.int(lineswithclose, sapply(closeparen[lineswithclose], length))
+  openlines <- rep.int(lineswithopen, vapply(openparen[lineswithopen], length, integer(1)))
+  closelines <- rep.int(lineswithclose, vapply(closeparen[lineswithclose], length, integer(1)))
 
   opencols <- do.call(c, openparen[lineswithopen])
   closecols <- do.call(c, closeparen[lineswithclose])
 
-  parenlocs <- rbind( cbind(openlines, opencols, 1), cbind(closelines, closecols, -1) )
+  if (length(opencols))
+    parenlocs <- rbind( cbind(openlines, opencols, 1), cbind(closelines, closecols, -1) )
+  else
+    parenlocs <- matrix(integer(), nrow = 0, ncol = 3)
+
   o <- order(parenlocs[,1], parenlocs[,2])
   parenlocs <- parenlocs[o,]
   parenlines <- parenlocs[,1]
@@ -165,7 +169,7 @@ patchLog <- function(f, newname=f, concords = NULL, max_print_line = 79, Cstyle 
         stop <- start + attr(errorline, "capture.length")[cbind(dofix, cap)] - 1
         f <- myNormalizePath(substr(lines[dofix], start, stop))
         mysubstr(lines[dofix], start, stop) <-
-          sapply(concords[f], function(x) x$newsrc)
+          vapply(concords[f], function(x) x$newsrc, character(1))
       }
     }
 
@@ -178,8 +182,8 @@ patchLog <- function(f, newname=f, concords = NULL, max_print_line = 79, Cstyle 
         okay <- grepl("[/\\]", s)
         s[!okay] <- paste0("./", s[!okay])
       }
-      mysubstr(lines[filestartline[dofix]], start, stop) <- sapply(concords[filename[dofix]],
-                                                                   function(x) withPath(x$newsrc))
+      mysubstr(lines[filestartline[dofix]], start, stop) <- vapply(concords[filename[dofix]],
+                                                                   function(x) withPath(x$newsrc), character(1))
     }
   }
   writeLines(lines, newname)
