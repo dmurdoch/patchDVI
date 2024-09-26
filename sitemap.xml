@@ -1,63 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/404.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/articles/patchDVI.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/DVIspecials.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/SweaveAll.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/SweaveMiktex.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/defSconcordance.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/knitInRStudio.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/knitPDF.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/needsPackages.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/patchDVI.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/patchLog.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/pdf_documentC.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/pdf_with_patches.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/readDVI.html</loc>
-  </url>
-  <url>
-    <loc>https://dmurdoch.github.io/patchDVI/reference/renderPDF.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://dmurdoch.github.io/patchDVI/404.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/articles/index.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/articles/patchDVI.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/authors.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/index.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/news/index.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/DVIspecials.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/SweaveAll.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/SweaveMiktex.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/defSconcordance.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/index.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/knitInRStudio.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/knitPDF.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/needsPackages.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/patchDVI.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/patchLog.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/pdf_documentC.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/pdf_with_patches.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/readDVI.html</loc></url>
+<url><loc>https://dmurdoch.github.io/patchDVI/reference/renderPDF.html</loc></url>
 </urlset>
+
