@@ -4,11 +4,13 @@ JSweave <- function(file, ...) {
   cmds <- Sys.which(c("uplatex", "dvipdfmx"))
   if (any(nchar(cmds) == 0)) {
     warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(file)))
-    lines <- "\\documentclass{article}\\begin{document}
-    This document requires ``uplatex'' and ``dvipdfmx''
-    \\end{document}"
+    lines <-
+"\\documentclass{article}
+\\begin{document}
+    This document requires ``uplatex'' and ``dvipdfmx''.
+\\end{document}"
     writeLines(lines, tex)
-    return()
+    return(tex)
   }
 
   # Need two runs to make TOC.  Skip dvipdfm on the first run,

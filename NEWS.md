@@ -143,3 +143,5 @@ https://dmurdoch.github.io/patchDVI/ .
 # patchDVI 1.11.2
 
 * Modified code to work with strict R headers.
+* Cleaned up error handling in case of LaTeX issues (particularly with
+missing Japanese support).
