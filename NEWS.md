@@ -140,7 +140,7 @@ package.
 * Moved source to Github, added website
 https://dmurdoch.github.io/patchDVI/ .
 
-# patchDVI 1.11.2
+# patchDVI 1.11.3
 
 * Modified code to work with strict R headers.
 * Cleaned up error handling in case of LaTeX issues (particularly with
