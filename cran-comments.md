@@ -1,4 +1,9 @@
-This is a small release containing the following changes:
+
+This is a resubmission.  The CRAN Windows check machine
+appears to have a bad copy of `uplatex`, the Unicode version
+of a Japanese version of LaTeX.  
+
+The original was a small release containing the following changes:
 
 # patchDVI 1.11.3
 
