@@ -145,3 +145,8 @@ https://dmurdoch.github.io/patchDVI/ .
 * Modified code to work with strict R headers.
 * Cleaned up error handling in case of LaTeX issues (particularly with
 missing Japanese support).
+
+# patchDVI 1.11.4
+
+* Added code to detect defective MikTeX installation of
+`uplatex`, needed for Japanese support.
