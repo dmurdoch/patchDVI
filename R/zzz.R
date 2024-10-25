@@ -2,13 +2,30 @@ JSweave <- function(file, ...) {
   tex <- sub("[.][RrSs](nw|tex)$", ".tex", file)
   # Check for commands
   cmds <- Sys.which(c("uplatex", "dvipdfmx"))
+  good <- TRUE
   if (any(nchar(cmds) == 0)) {
+    msg <- paste("Missing executable: ", c("uplatex", "dvipdfmx")[nchar(cmds) == 0])
     warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(file)))
-    lines <-
+    good <- FALSE
+  } else {
+    msg <- system("uplatex --version", intern = TRUE)
+    if (grepl("eu-pTeX", msg[1])) {
+      warning(gettextf("Vignette '%s' requires Japanese 'uplatex' based on 'pTeX'.", basename(file)))
+      good <- FALSE
+    }
+  }
+
+  if (!good) {
+    lines <- c(
 "\\documentclass{article}
 \\begin{document}
-    This document requires ``uplatex'' and ``dvipdfmx''.
-\\end{document}"
+    This document requires ``uplatex'' (based on the Japanese pTeX) and ``dvipdfmx''.  MikTeX's ``eu-pTeX'' does not work.
+
+Diagnostics:
+\\begin{verbatim}",
+msg,
+"\\end{verbatim}
+\\end{document}")
     writeLines(lines, tex)
     return(tex)
   }
