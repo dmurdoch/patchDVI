@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   patchDVI: patchDVI.html
-last_built: 2024-10-25T14:54Z
+last_built: 2024-10-27T14:08Z
 urls:
   reference: https://dmurdoch.github.io/patchDVI/reference
   article: https://dmurdoch.github.io/patchDVI/articles
