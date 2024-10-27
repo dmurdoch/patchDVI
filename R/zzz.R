@@ -1,15 +1,15 @@
-checkUplatex <- function() {
+checkUplatex <- function(tex) {
   # Check for commands
   cmds <- Sys.which(c("uplatex", "dvipdfmx"))
   good <- TRUE
   if (any(nchar(cmds) == 0)) {
     msg <- paste("Missing executable: ", c("uplatex", "dvipdfmx")[nchar(cmds) == 0])
-    warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(file)))
+    warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(tex)))
     good <- FALSE
   } else {
     msg <- system("uplatex --version", intern = TRUE)
     if (grepl("eu-pTeX", msg[1])) {
-      warning(gettextf("Vignette '%s' requires Japanese 'uplatex' based on 'pTeX'.", basename(file)))
+      warning(gettextf("Vignette '%s' requires Japanese 'uplatex' based on 'pTeX'.", basename(tex)))
       good <- FALSE
     }
   }
@@ -33,7 +33,7 @@ Diagnostics:
 JSweave <- function(file, weave = utils::Sweave, ...) {
   tex <- sub("[.][RrSs](nw|tex)$", ".tex", file)
   # Check for commands
-  check <- checkUplatex()
+  check <- checkUplatex(tex)
   if (!is.null(check))
     return(check)
 
