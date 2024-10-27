@@ -4,12 +4,12 @@ checkUplatex <- function(tex) {
   good <- TRUE
   if (any(nchar(cmds) == 0)) {
     msg <- paste("Missing executable: ", c("uplatex", "dvipdfmx")[nchar(cmds) == 0])
-    warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(file)))
+    warning(gettextf("Vignette '%s' requires 'uplatex' and 'dvipdfmx'", basename(tex)))
     good <- FALSE
   } else {
     msg <- system("uplatex --version", intern = TRUE)
     if (grepl("eu-pTeX", msg[1])) {
-      warning(gettextf("Vignette '%s' requires Japanese 'uplatex' based on 'pTeX'.", basename(file)))
+      warning(gettextf("Vignette '%s' requires Japanese 'uplatex' based on 'pTeX'.", basename(tex)))
       good <- FALSE
     }
   }
