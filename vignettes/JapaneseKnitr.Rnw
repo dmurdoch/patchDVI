@@ -1,0 +1,169 @@
+%!TEX encoding = UTF-8 Unicode
+%!TEX TS-program = Jknitr
+%!TEX TW-program = Jknitr
+
+% This document needs the Japanese localized version of LaTeX, uplatex,
+% as described in the text in section 1.
+
+\documentclass[12pt]{ujarticle}
+\usepackage{natbib}
+
+<<results="asis",echo=FALSE>>=
+patchDVI::useknitr()
+@
+
+\bibliographystyle{plain}
+
+\newcommand{\patchDVI}{\patchDVIn\ }
+\newcommand{\patchDVIn}{\textbf{patchDVI}}
+\newcommand{\file}[1]{\texttt{#1}}
+
+%\VignetteEngine{patchDVI::Jknitr}
+%\VignetteIndexEntry{Using knitr and patchDVI with Japanese text}
+%\VignetteKeyword{knitr}
+%\VignetteKeyword{pdf}
+
+
+\title{Using knitr and \patchDVI with Japanese text}
+\author{Duncan Murdoch}
+
+\begin{document}
+
+\maketitle
+
+\abstract{
+The \patchDVI package works with knitr (\citep{Xie2013}) and
+document previewers to facilitate editing:  it modifies the links
+that \LaTeX\ puts into the output so that they refer to the original
+source.  It also includes a few project management functions to
+make large multi-file knitr documents easier to handle.  This
+document describes Japanese language support in the
+package.}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+The main vignette ``The patchDVI package'' describes general features
+of patchDVI, and how to set up various editors to use it in typesetting
+English-language vignettes.  This vignette describes how to set it up
+for Japanese language text when using \texttt{.Rnw} files
+in knitr.  I expect the issues would be the same
+in other non-Roman alphabets, but I have no experience with them.  If you are using \texttt{.Rnw} files in
+Sweave, see the vignette ``Using Sweave and \patchDVI with Japanese text''.
+
+The main issues in writing Japanese language (日本語 ) documents are the
+encoding of the
+character set and the varying support by different \LaTeX\ engines.  The
+standard \texttt{pdflatex} engine does not work well with Japanese.
+In November, 2013 I visited the Institute for Statistical Mathematics
+in Tokyo, and with the help of Mr. Yasuto Nakano and Prof. Haruhiko Okumura
+I developed these instructions.  In outline:  you must use the UTF-8 encoding
+for the characters, use \texttt{uplatex}, \texttt{platex} or \texttt{xelatex}
+to convert to a DVI file, and use
+\texttt{dvipdfmx} to convert the DVI to PDF.  These instructions
+describe the procedure using \texttt{uplatex};  I expect modifications
+for the other engines will be minor.
+
+\section{Creating a Vignette in an R Package}
+
+To create a ``vignette'' in an R package that contains Japanese language text, follow these
+steps.
+
+\begin{enumerate}
+\item In the \texttt{DESCRIPTION} file of the package, add the lines
+\begin{verbatim}
+Suggests:  patchDVI
+VignetteBuilder:  patchDVI
+\end{verbatim}
+
+
+\item Put the knitr \texttt{.Rnw} file containing the source for
+the vignette in the \texttt{vignettes}
+directory of the package.
+
+\item As with all vignettes, it needs a line like
+\begin{verbatim}
+  %\VignetteIndexEntry{Using knitr and patchDVI with Japanese text}
+\end{verbatim}
+somewhere near the beginning, to give the text that will be shown by \verb!browseVignettes()!
+and similar R functions.
+
+\item To process it through \texttt{uplatex} and \texttt{dvipdfmx} instead of the default
+engines, add the line
+\begin{verbatim}
+  %\VignetteEngine{patchDVI::Jknitr}
+\end{verbatim}
+near the beginning.  R Markdown documents are not currently
+supported.
+\end{enumerate}
+
+\section{Using \patchDVI with TeXWorks}
+\label{sec:texworks}
+
+TeXWorks is a \LaTeX\ editor for several platforms.  These instructions
+have been tested in TeXWorks 0.6.9 on MacOS; I have not tested them on Windows, but they should work if \texttt{uplatex} and 
+\texttt{dvipdfmx} are available.  (At the time of this writing,
+the MikTeX distribution on Windows includes \texttt{uplatex},
+but it's a version that doesn't
+handle Japanese text properly; you could try TinyTeX or TeXLive instead.  You may need to add Japanese language support.)
+
+\begin{enumerate}
+\item
+In
+Edit -- Preferences -- Typesetting
+click on the ``+'' sign near the bottom of the Processing Tools box.  Set the name of the tool to be JSweave.
+Set the program to Rscript.  (You may need to give the fully qualified path
+if R is not in your system PATH.)
+
+Add two arguments on separate lines.  The first is simply -e, the second is
+\begin{verbatim}
+{Sys.setlocale(locale='en_US.UTF-8');
+ patchDVI::SweaveDVIPDFM(  '$fullname',
+ latex='uplatex', dvipdfm='dvipdfmx',
+ encoding = 'UTF-8', weave = knitr::knit )}
+\end{verbatim}
+This should be typed all on one line.
+
+\item Install the \texttt{patchDVI} package into R.  You need
+at least version 1.11.4 of patchDVI.
+\item Add the lines
+\begin{verbatim}
+%!TEX encoding = UTF-8 Unicode
+%!TEX TW-program = Jknitr
+\end{verbatim}
+at the beginning of all files, and make sure they are created with UTF-8 encoding.
+\item If you have multiple files in your project, your main file must be a \texttt{.Rnw} file
+(e.g. \texttt{Main.Rnw}) which lists all Sweave files in a \texttt{.SweaveFiles} variable,
+and you need to add the line
+\begin{verbatim}
+%!TEX root = Main.Rnw
+\end{verbatim}
+to each subordinate file.
+
+\item Add \\
+\verb!<<results="asis",echo=FALSE>>=! \\
+\verb!patchDVI::useknitr()! \\
+\verb!@! \\
+in the header section of the main file.
+
+
+\end{enumerate}
+
+The TeXWorks previewer will jump back to the source if you right click and choose Jump to Source.
+
+\section{Using patchDVI with TeXShop}
+
+Instructions for this combination should be similar to the
+ones for Sweave in TeXShop, but have not been tested.
+
+\bibliography{patchDVI}
+\end{document}
+
+
+
+

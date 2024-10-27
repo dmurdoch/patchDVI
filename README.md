@@ -44,3 +44,8 @@ install.packages("patchDVI", dependencies = TRUE)
 See the [`patchDVI`
 vignette](https://dmurdoch.github.io/patchDVI/articles/patchDVI.html)
 for usage details.
+
+## Japanese language support
+
+`patchDVI` has support for `uplatex` and `dvipdfmx` to allow use of
+`Sweave` or `knitr` with Japanese language documents.

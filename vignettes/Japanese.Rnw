@@ -52,8 +52,11 @@ package.}
 The main vignette ``The patchDVI package'' describes general features
 of patchDVI, and how to set up various editors to use it in typesetting
 English-language vignettes.  This vignette describes how to set it up
-for Japanese language text.  I expect the issues would be the same
-in other non-Roman alphabets, but I have no experience with them.
+for Japanese language text when using Sweave.  I expect the issues would be the same
+in other non-Roman alphabets, but I have no experience with
+them.  If you are using \texttt{.Rnw} files in
+\texttt{knitr}, see the vignette ``Using knitr and \patchDVI with Japanese text''.
+
 
 The main issues in writing Japanese language (日本語 ) documents are the
 encoding of the
