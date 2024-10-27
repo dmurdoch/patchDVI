@@ -16,6 +16,7 @@ useknitr <- function(writeMacro) {
   if (!requireNamespace("knitr", quietly = TRUE))
     stop("This function requires the knitr package.")
   knitr::opts_knit$set(concordance = TRUE)
+  knitr::opts_chunk$set(dev = "postscript")
   infile <- knitr::current_input()
   if (missing(writeMacro))
     writeMacro <- any(grepl(knitr::knit_patterns$get("header.begin"),
