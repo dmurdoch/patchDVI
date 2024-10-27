@@ -52,7 +52,7 @@ JSweave <- function(file, weave = utils::Sweave, ...) {
 Jknitr <- function(file, ...) {
   if (!requireNamespace("knitr"))
     stop("The Jknitr driver requires the knitr package.")
-  Jsweave(file = file, weave = knitr::knit)
+  JSweave(file = file, weave = knitr::knit)
 }
 
 knitr_purl <- function(...) {
