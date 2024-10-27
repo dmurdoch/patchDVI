@@ -1,4 +1,4 @@
-checkUplatex <- function() {
+checkUplatex <- function(tex) {
   # Check for commands
   cmds <- Sys.which(c("uplatex", "dvipdfmx"))
   good <- TRUE
@@ -33,7 +33,7 @@ Diagnostics:
 JSweave <- function(file, weave = utils::Sweave, ...) {
   tex <- sub("[.][RrSs](nw|tex)$", ".tex", file)
   # Check for commands
-  check <- checkUplatex()
+  check <- checkUplatex(tex)
   if (!is.null(check))
     return(check)
 
